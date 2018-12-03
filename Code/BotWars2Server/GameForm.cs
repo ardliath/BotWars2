@@ -29,7 +29,36 @@ namespace BotWars2Server
 
         public void Update(Arena arena)
         {
+            using (var bitmap = new Bitmap(this.pictureBox1.Width, pictureBox1.Height))
+            {
+                using (var gfx = Graphics.FromImage(bitmap))
+                {
+                    gfx.FillRectangle(Brushes.Black, new Rectangle(0, 0, this.pictureBox1.Width, this.pictureBox1.Height));
 
+                    foreach (var player in arena.Players)
+                    {
+                        gfx.FillEllipse(Brushes.Aquamarine, new RectangleF(new Point(player.Position.X - 1, player.Position.Y - 1), new Size(3, 3)));
+                        var track = arena.Tracks.SingleOrDefault(t => t.Player.Equals(player));
+                        if (track != null)
+                        {
+                            foreach (var position in track.PreviousPositions)
+                            {
+                                DrawPixel(gfx, position);
+                            }
+                        }
+                    }
+                }
+
+                using (var gfx = this.pictureBox1.CreateGraphics())
+                {
+                    gfx.DrawImage(bitmap, new PointF(0, 0));
+                }
+            }
+        }
+
+        public void DrawPixel(Graphics gfx, Position position)
+        {
+            gfx.DrawRectangle(Pens.Red, new Rectangle(position.X, position.Y, 1, 1));
         }
     }
 }

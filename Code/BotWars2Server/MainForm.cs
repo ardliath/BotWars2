@@ -1,4 +1,5 @@
-﻿using System;
+﻿using BotWars2Server.Code.State;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -15,6 +16,21 @@ namespace BotWars2Server
         public MainForm()
         {
             InitializeComponent();
+        }
+
+        protected override void OnLoad(EventArgs e)
+        {
+            base.OnLoad(e);
+
+            var gf = new GameForm();
+            gf.Show();
+            gf.StartGame(new Arena
+            {
+                Height = 200,
+                Width = 200,
+            },
+            new Player("Player 1", "", new Position(5, 5)),
+            new Player("Player 2", "", new Position(50, 50)));
         }
     }
 }
