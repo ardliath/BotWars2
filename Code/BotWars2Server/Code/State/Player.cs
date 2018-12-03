@@ -8,5 +8,8 @@ namespace BotWars2Server.Code.State
 {
     public class Player
     {
+        public string Name { get; set; }
+        public string Uri { get; set; }
+        public Position Position { get; set; }
     }
 }

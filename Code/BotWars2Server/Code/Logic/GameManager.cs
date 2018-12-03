@@ -11,8 +11,12 @@ namespace BotWars2Server.Code.Logic
     {
         public GameManager(Arena arena, params Player[] players)
         {
-
+            Arena = arena;
+            Players = players;
         }
+
+        public Arena Arena { get; }
+        public IEnumerable<Player> Players { get; }
 
         public void Play(Action<Arena> updateAction)
         {
