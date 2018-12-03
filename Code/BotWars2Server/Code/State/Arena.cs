@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace BotWars2Server.Tests
+namespace BotWars2Server.Code.State
 {
-    public class Class1
+    public class Arena
     {
     }
 }
