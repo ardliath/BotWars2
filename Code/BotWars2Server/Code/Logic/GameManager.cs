@@ -29,7 +29,10 @@ namespace BotWars2Server.Code.Logic
             this.Arena.Tracks = tracks;
 
 
-
+            while(this.Arena.Players.Count(p => p.IsAlive) > 1)
+            {
+                updateAction(this.Arena);
+            }
         }
     }
 }
