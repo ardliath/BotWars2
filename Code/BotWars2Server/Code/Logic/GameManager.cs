@@ -13,5 +13,10 @@ namespace BotWars2Server.Code.Logic
         {
 
         }
+
+        public void Play(Action<Arena> updateAction)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

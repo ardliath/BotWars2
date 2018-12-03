@@ -1,4 +1,6 @@
-﻿using System;
+﻿using BotWars2Server.Code.Logic;
+using BotWars2Server.Code.State;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -15,6 +17,19 @@ namespace BotWars2Server
         public GameForm()
         {
             InitializeComponent();
+        }
+
+
+        public void StartGame(Arena arena, params Player[] players)
+        {
+            var gameManager = new GameManager(arena, players);
+
+            gameManager.Play(Update);
+        }
+
+        public void Update(Arena arena)
+        {
+
         }
     }
 }
