@@ -38,8 +38,16 @@ namespace BotWars2Server.Code.Logic
             {
                 foreach(var player in this.Arena.Players.Where(p => p.IsAlive))
                 {
-                    this.GetMoveFromPlayer(player);
+                    var newPosition = this.GetMoveFromPlayer(player);
+                    if (IsPositionValidForPlayer(player, newPosition))
+                    {
+                        var track = this.Arena.Tracks.SingleOrDefault(t => t.Player.Equals(player));
+                        track?.PreviousPositions.Add(player.Position);
+                        player.Position = newPosition;
+                    }
                 }
+
+                CheckForCollisions();
 
                 foreach (var player in this.Arena.Players)
                 {
@@ -50,19 +58,39 @@ namespace BotWars2Server.Code.Logic
             }
         }
 
+        private void CheckForCollisions()
+        {
+            // Checks if there have been any collisions and removes players from the game if there have been
+            throw new NotImplementedException();
+        }
+
+        /// <summary>
+        /// Returns a bool indicating whether the player can move to the position
+        /// </summary>
+        /// <param name="player"></param>
+        /// <param name="newPosition"></param>
+        /// <returns></returns>
+        private bool IsPositionValidForPlayer(Player player, Position newPosition)
+        {            
+            throw new NotImplementedException();
+        }
+
         private void SendStartInstructions(Player player)
         {
             // This is where we tell the player what the game is and what's going on
+            throw new NotImplementedException();
         }
 
         private void UpdatePlayersOnArena(Player player)
         {
             // This is where we will tell the players what is going on in the game
+            throw new NotImplementedException();
         }
 
-        private void GetMoveFromPlayer(Player player)
+        private Position GetMoveFromPlayer(Player player)
         {
             // This is where we ask each player what we they want to do
+            throw new NotImplementedException();
         }
     }
 }
