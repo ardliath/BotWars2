@@ -31,8 +31,28 @@ namespace BotWars2Server.Code.Logic
 
             while(this.Arena.Players.Count(p => p.IsAlive) > 1)
             {
+                foreach(var player in this.Arena.Players.Where(p => p.IsAlive))
+                {
+                    this.GetMoveFromPlayer(player);
+                }
+
+                foreach (var player in this.Arena.Players)
+                {
+                    this.UpdatePlayersOnArena(player);
+                }
+
                 updateAction(this.Arena);
             }
+        }
+
+        private void UpdatePlayersOnArena(Player player)
+        {
+            throw new NotImplementedException();
+        }
+
+        private void GetMoveFromPlayer(Player player)
+        {
+            throw new NotImplementedException();
         }
     }
 }
