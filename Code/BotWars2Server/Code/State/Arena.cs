@@ -10,5 +10,7 @@ namespace BotWars2Server.Code.State
     {
         public int Height { get; set; }
         public int Width { get; set; }
+        public IEnumerable<Player> Players { get; set; }
+        public IEnumerable<Track> Tracks { get; set; }
     }
 }

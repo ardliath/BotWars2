@@ -20,7 +20,16 @@ namespace BotWars2Server.Code.Logic
 
         public void Play(Action<Arena> updateAction)
         {
-            throw new NotImplementedException();
+            this.Arena.Players = this.Players;
+            var tracks = new List<Track>();
+            foreach(var player in this.Players)
+            {
+                tracks.Add(new Track(player));
+            }
+            this.Arena.Tracks = tracks;
+
+
+
         }
     }
 }
