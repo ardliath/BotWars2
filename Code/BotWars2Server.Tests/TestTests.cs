@@ -9,10 +9,10 @@ namespace BotWars2Server.Tests
 {
     public class TestTests
     {
-        [Test]
-        public void ShouldFailBuild()
-        {
-            Assert.Fail();
-        }
+        //[Test]
+        //public void ShouldFailBuild()
+        //{
+        //    Assert.Fail();
+        //}
     }
 }
