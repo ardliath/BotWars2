@@ -28,8 +28,13 @@ namespace BotWars2Server.Code.Logic
             }
             this.Arena.Tracks = tracks;
 
+            foreach (var player in this.Arena.Players)
+            {
+                this.SendStartInstructions(player);
+            }
 
-            while(this.Arena.Players.Count(p => p.IsAlive) > 1)
+
+            while (this.Arena.Players.Count(p => p.IsAlive) > 1)
             {
                 foreach(var player in this.Arena.Players.Where(p => p.IsAlive))
                 {
@@ -45,14 +50,19 @@ namespace BotWars2Server.Code.Logic
             }
         }
 
+        private void SendStartInstructions(Player player)
+        {
+            // This is where we tell the player what the game is and what's going on
+        }
+
         private void UpdatePlayersOnArena(Player player)
         {
-            throw new NotImplementedException();
+            // This is where we will tell the players what is going on in the game
         }
 
         private void GetMoveFromPlayer(Player player)
         {
-            throw new NotImplementedException();
+            // This is where we ask each player what we they want to do
         }
     }
 }
