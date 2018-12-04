@@ -72,7 +72,15 @@ namespace BotWars2Server.Code.Logic
         /// <returns>A bool indicating whether the given move is valid</returns>
         public static bool IsPositionValidForPlayer(Player player, Position newPosition)
         {            
-            throw new NotImplementedException();
+            if(player.Position.Equals(newPosition))
+            {
+                return false;
+            }
+
+            var diffX = Math.Abs(player.Position.X - newPosition.X);
+            var diffY = Math.Abs(player.Position.Y - newPosition.Y);
+
+            return diffX + diffY == 1;
         }
 
         private void SendStartInstructions(Player player)
