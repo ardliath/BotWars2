@@ -29,9 +29,9 @@ namespace BotWars2Server.Tests.LogicTests.GameManagerTests
         [TestCase(5, 5, 4, 4, false)]
         public void IsMoveValid(int currentX, int currentY, int newX, int newY, bool expectedIsValid)
         {
-            var player = new Player(Guid.NewGuid().ToString(), Guid.NewGuid().ToString(), new Position { X = currentX, Y = currentY });
+            var player = new Player(Guid.NewGuid().ToString(), Guid.NewGuid().ToString(), new Position(currentX, currentY));
 
-            var isValid = GameManager.IsPositionValidForPlayer(player, new Position { X = newX, Y = newY });
+            var isValid = GameManager.IsPositionValidForPlayer(player, new Position(newX, newY ));
 
             Assert.AreEqual(expectedIsValid, isValid);
         }
