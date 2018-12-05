@@ -37,7 +37,10 @@ namespace BotWars2Server
 
                     foreach (var player in arena.Players)
                     {
-                        gfx.FillEllipse(Brushes.Aquamarine, new RectangleF(new Point(player.Position.X - 1, player.Position.Y - 1), new Size(3, 3)));
+                        if (player.IsAlive)
+                        {
+                            gfx.FillEllipse(Brushes.Aquamarine, new RectangleF(new Point(player.Position.X - 1, player.Position.Y - 1), new Size(3, 3)));
+                        }
                         var track = arena.Tracks.SingleOrDefault(t => t.Player.Equals(player));
                         if (track != null)
                         {
