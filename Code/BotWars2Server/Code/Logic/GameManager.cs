@@ -61,10 +61,19 @@ namespace BotWars2Server.Code.Logic
             }
         }
 
+        /// <summary>
+        /// Checks if there have been any collisions and removes players from the game if there have been
+        /// </summary>
         public static void CheckForCollisions(Arena arena)
         {
-            // Checks if there have been any collisions and removes players from the game if there have been
-            throw new NotImplementedException();
+            foreach(var player in arena.Players.Where(p => p.IsAlive))
+            {
+                var otherTracks = arena.Tracks.Where(t => !t.Player.Equals(player)).SelectMany(t => t.PreviousPositions);
+                if(otherTracks.Any(p => p.Equals(player.Position)))
+                {
+                    player.IsAlive = false;
+                }
+            }
         }
 
         /// <summary>
