@@ -78,22 +78,28 @@ namespace BotWars2Server.Code.Logic
             throw new NotImplementedException();
         }
 
+        /// <summary>
+        /// Sent a start instruction to tell the bots where they are
+        /// </summary>
         private void SendStartInstructions(Player player)
         {
-            // This is where we tell the player what the game is and what's going on
-            throw new NotImplementedException();
+            player.SendStartInstruction(this.Arena);
         }
 
+        /// <summary>
+        /// Updates the player on the current Arena state
+        /// </summary>
         private void UpdatePlayersOnArena(Player player)
         {
-            // This is where we will tell the players what is going on in the game
-            throw new NotImplementedException();
+            player.UpdateState(this.Arena);
         }
 
+        /// <summary>
+        /// Ask the player what we they want to do
+        /// </summary>
         private Position GetMoveFromPlayer(Player player)
         {
-            // This is where we ask each player what we they want to do
-            throw new NotImplementedException();
+            return player.GetMove();
         }
     }
 }

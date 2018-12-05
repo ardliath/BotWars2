@@ -48,6 +48,7 @@
   <ItemGroup>
     <Compile Include="Code\Communication\RemoteBot.cs" />
     <Compile Include="Code\HouseBots\HouseBotBase.cs" />
+    <Compile Include="Code\HouseBots\RandomBot.cs" />
     <Compile Include="Code\Logic\GameManager.cs" />
     <Compile Include="Code\State\Arena.cs" />
     <Compile Include="Code\State\Player.cs" />

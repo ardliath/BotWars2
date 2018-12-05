@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace BotWars2Server.Code.State
 {
-    public class Player
+    public abstract class Player
     {
         public string Name { get; set; }        
         public Position Position { get; set; }
@@ -19,5 +19,10 @@ namespace BotWars2Server.Code.State
             Name = name;
             Position = position;
         }
+
+        public abstract Position GetMove();
+
+        public abstract void UpdateState(Arena arena);
+        public abstract void SendStartInstruction(Arena arena);
     }
 }

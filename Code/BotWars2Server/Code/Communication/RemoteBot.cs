@@ -15,5 +15,20 @@ namespace BotWars2Server.Code.Communication
         {
             this.Uri = uri;
         }
+
+        public override Position GetMove()
+        {
+            throw new NotImplementedException();
+        }
+
+        public override void UpdateState(Arena arena)
+        {
+            throw new NotImplementedException();
+        }
+
+        public override void SendStartInstruction(Arena arena)
+        {
+            throw new NotImplementedException();
+        }
     }
 }
