@@ -12,9 +12,9 @@ namespace BotWars2Server.Tests.LogicTests.GameManagerTests
     public class CheckForCollisionsTests
     {
         [Test]
-        public void TestCollision()
+        public void When_second_player_colides_with_first_then_they_are_destroyed()
         {
-            var arena = CreateArena(new Position(5, 15), (a) =>
+            var arena = CreateArena(new Position(5, 50), new Position(5, 15), (a) =>
             {
                 for (int i = 0; i < a.Players.First().Position.Y; i++)
                 {
@@ -25,13 +25,31 @@ namespace BotWars2Server.Tests.LogicTests.GameManagerTests
             GameManager.CheckForCollisions(arena);
 
             Assert.IsFalse(arena.Players.Last().IsAlive);
+            Assert.IsTrue(arena.Players.First().IsAlive);
         }
 
-        public Arena CreateArena(Position playerTwoPosition, Action<Arena> createTracks)
+        [Test]
+        public void When_first_player_colides_with_second_then_they_are_destroyed()
+        {
+            var arena = CreateArena(new Position(50, 50), new Position(75, 50), (a) =>
+            {
+                for (int i = 25; i < a.Players.Last().Position.X; i++)
+                {
+                    a.Tracks.ElementAt(0).PreviousPositions.Add(new Position(i, a.Players.Last().Position.Y));
+                }
+            });
+
+            GameManager.CheckForCollisions(arena);
+
+            Assert.IsTrue(arena.Players.Last().IsAlive);
+            Assert.IsFalse(arena.Players.First().IsAlive);
+        }
+
+        public Arena CreateArena(Position playerOnePosition, Position playerTwoPosition, Action<Arena> createTracks)
         {
             var players = new Player[]
             {
-                new Player(Guid.NewGuid().ToString(), Guid.NewGuid().ToString(), new Position(5, 50)),
+                new Player(Guid.NewGuid().ToString(), Guid.NewGuid().ToString(), playerOnePosition),
                 new Player(Guid.NewGuid().ToString(), Guid.NewGuid().ToString(), playerTwoPosition)
             };
             var arena = new Arena
