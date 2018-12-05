@@ -1,4 +1,5 @@
 ﻿using BotWars2Server.Code.Communication;
+using BotWars2Server.Code.HouseBots;
 using BotWars2Server.Code.State;
 using System;
 using System.Collections.Generic;
@@ -30,8 +31,8 @@ namespace BotWars2Server
                 Height = 200,
                 Width = 200,
             },
-            new RemoteBot("Player 1", "", new Position(5, 5)),
-            new RemoteBot("Player 2", "", new Position(50, 50)));
+            new RandomBot(new Position(5, 5)),
+            new RandomBot(new Position(50, 50)));
         }
     }
 }
