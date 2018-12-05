@@ -37,17 +37,17 @@ namespace BotWars2Server
 
                     foreach (var player in arena.Players)
                     {
-                        if (player.IsAlive)
-                        {
-                            gfx.FillEllipse(Brushes.Aquamarine, new RectangleF(new Point(player.Position.X - 1, player.Position.Y - 1), new Size(3, 3)));
-                        }
                         var track = arena.Tracks.SingleOrDefault(t => t.Player.Equals(player));
                         if (track != null)
                         {
                             foreach (var position in track.PreviousPositions)
                             {
-                                DrawPixel(gfx, position);
+                                DrawPreviousPosition(gfx, position, arena);
                             }
+                        }
+                        if (player.IsAlive)
+                        {
+                            gfx.FillEllipse(Brushes.Aquamarine, new RectangleF(new Point(player.Position.X - arena.Zoom, player.Position.Y - arena.Zoom), new Size(arena.Zoom * 2, arena.Zoom * 2)));
                         }
                     }
                 }
@@ -59,9 +59,10 @@ namespace BotWars2Server
             }
         }
 
-        public void DrawPixel(Graphics gfx, Position position)
+        public void DrawPreviousPosition(Graphics gfx, Position position, Arena arena)
         {
-            gfx.DrawRectangle(Pens.Red, new Rectangle(position.X, position.Y, 1, 1));
+            var offset = arena.Zoom / 2;
+            gfx.DrawRectangle(Pens.Red, new Rectangle(position.X - offset, position.Y - offset, arena.Zoom, arena.Zoom));
         }
     }
 }
