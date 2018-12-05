@@ -14,7 +14,7 @@ namespace BotWars2Server.Tests.LogicTests.GameManagerTests
         [Test]
         public void TestCollision()
         {
-            var arena = CreateArena((a) =>
+            var arena = CreateArena(new Position(5, 15), (a) =>
             {
                 for (int i = 0; i < a.Players.First().Position.Y; i++)
                 {
@@ -27,12 +27,12 @@ namespace BotWars2Server.Tests.LogicTests.GameManagerTests
             Assert.IsFalse(arena.Players.Last().IsAlive);
         }
 
-        public Arena CreateArena(Action<Arena> createTracks)
+        public Arena CreateArena(Position playerTwoPosition, Action<Arena> createTracks)
         {
             var players = new Player[]
             {
                 new Player(Guid.NewGuid().ToString(), Guid.NewGuid().ToString(), new Position(5, 50)),
-                new Player(Guid.NewGuid().ToString(), Guid.NewGuid().ToString(), new Position(5, 15))
+                new Player(Guid.NewGuid().ToString(), Guid.NewGuid().ToString(), playerTwoPosition)
             };
             var arena = new Arena
             {
