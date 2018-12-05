@@ -48,7 +48,7 @@ namespace BotWars2Server.Code.Logic
                     }
                 }
 
-                CheckForCollisions();
+                CheckForCollisions(this.Arena);
 
                 foreach (var player in this.Arena.Players)
                 {
@@ -61,7 +61,7 @@ namespace BotWars2Server.Code.Logic
             }
         }
 
-        private void CheckForCollisions()
+        public static void CheckForCollisions(Arena arena)
         {
             // Checks if there have been any collisions and removes players from the game if there have been
             throw new NotImplementedException();
