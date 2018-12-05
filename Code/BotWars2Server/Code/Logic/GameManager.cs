@@ -68,8 +68,18 @@ namespace BotWars2Server.Code.Logic
         {
             foreach(var player in arena.Players.Where(p => p.IsAlive))
             {
-                var tracks = arena.Tracks.SelectMany(t => t.PreviousPositions);
-                if(tracks.Any(p => p.Equals(player.Position)))
+                var otherTracks = arena.Tracks
+                    .Where(t => !t.Player.Equals(player))
+                    .SelectMany(t => t.PreviousPositions);
+
+                var playerTrack = arena.Tracks
+                    .Single(t => t.Player.Equals(player))?.PreviousPositions;
+
+                var dangerousTracks = arena.ArenaOptions.CrossingOwnTrackCausesDestruction
+                    ? otherTracks.Union(playerTrack)
+                    : otherTracks;
+
+                if (dangerousTracks.Any(p => p.Equals(player.Position)))
                 {
                     player.IsAlive = false;
                 }

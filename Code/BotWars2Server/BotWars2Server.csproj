@@ -48,6 +48,7 @@
   <ItemGroup>
     <Compile Include="Code\Logic\GameManager.cs" />
     <Compile Include="Code\State\Arena.cs" />
+    <Compile Include="Code\State\ArenaOptions.cs" />
     <Compile Include="Code\State\Player.cs" />
     <Compile Include="Code\State\Position.cs" />
     <Compile Include="Code\State\Track.cs" />

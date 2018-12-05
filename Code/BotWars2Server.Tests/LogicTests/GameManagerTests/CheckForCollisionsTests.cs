@@ -45,8 +45,9 @@ namespace BotWars2Server.Tests.LogicTests.GameManagerTests
             Assert.IsTrue(arena.Players.Last().IsAlive);            
         }
 
-        [Test]
-        public void When_player_hits_their_own_track_they_lose()
+        [TestCase(true, false, TestName = "When_player_hits_their_own_track_they_lose_if_option_is_set_to_true")]
+        [TestCase(false, true, TestName = "When_player_hits_their_own_track_they_survive_if_option_is_set_to_false")]
+        public void CrossingOwnTrack(bool crossingTrackShouldKill, bool expectedIsAlive)
         {
             var arena = CreateArena(new Position(50, 50), new Position(99, 99), (a) =>
             {                
@@ -54,15 +55,15 @@ namespace BotWars2Server.Tests.LogicTests.GameManagerTests
                 {
                     a.Tracks.ElementAt(0).PreviousPositions.Add(new Position(i, 50));
                 }
-            });
+            }, crossingTrackShouldKill);
 
             GameManager.CheckForCollisions(arena);
 
-            Assert.IsFalse(arena.Players.First().IsAlive);
+            Assert.AreEqual(expectedIsAlive, arena.Players.First().IsAlive);
             Assert.IsTrue(arena.Players.Last().IsAlive);
         }
 
-        public Arena CreateArena(Position playerOnePosition, Position playerTwoPosition, Action<Arena> createTracks)
+        public Arena CreateArena(Position playerOnePosition, Position playerTwoPosition, Action<Arena> createTracks, bool crossingOwnTrackCausesDestruction = true)
         {
             var players = new Player[]
             {
@@ -78,9 +79,10 @@ namespace BotWars2Server.Tests.LogicTests.GameManagerTests
                 {
                     new Track(players.First()),
                     new Track(players.Last())
-                }
+                },
             };
             createTracks(arena);
+            arena.ArenaOptions.CrossingOwnTrackCausesDestruction = crossingOwnTrackCausesDestruction;
 
             return arena;
         }
