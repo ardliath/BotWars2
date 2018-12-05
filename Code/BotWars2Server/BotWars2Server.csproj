@@ -46,6 +46,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Code\Communication\RemoteBot.cs" />
+    <Compile Include="Code\HouseBots\HouseBotBase.cs" />
     <Compile Include="Code\Logic\GameManager.cs" />
     <Compile Include="Code\State\Arena.cs" />
     <Compile Include="Code\State\Player.cs" />
@@ -90,8 +92,6 @@
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Code\Communication\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
