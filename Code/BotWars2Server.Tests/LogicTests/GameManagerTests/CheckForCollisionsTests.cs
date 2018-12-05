@@ -14,6 +14,21 @@ namespace BotWars2Server.Tests.LogicTests.GameManagerTests
         [Test]
         public void TestCollision()
         {
+            var arena = CreateArena((a) =>
+            {
+                for (int i = 0; i < a.Players.First().Position.Y; i++)
+                {
+                    a.Tracks.ElementAt(0).PreviousPositions.Add(new Position(a.Players.First().Position.X, i));
+                }
+            });
+
+            GameManager.CheckForCollisions(arena);
+
+            Assert.IsFalse(arena.Players.Last().IsAlive);
+        }
+
+        public Arena CreateArena(Action<Arena> createTracks)
+        {
             var players = new Player[]
             {
                 new Player(Guid.NewGuid().ToString(), Guid.NewGuid().ToString(), new Position(5, 50)),
@@ -30,14 +45,9 @@ namespace BotWars2Server.Tests.LogicTests.GameManagerTests
                     new Track(players.Last())
                 }
             };
-            for (int i = 0; i < players.First().Position.Y; i++)
-            {
-                arena.Tracks.ElementAt(0).PreviousPositions.Add(new Position(players.First().Position.X, i));
-            }
+            createTracks(arena);
 
-            GameManager.CheckForCollisions(arena);
-
-            Assert.IsFalse(players.Last().IsAlive);
+            return arena;
         }
     }
 }
