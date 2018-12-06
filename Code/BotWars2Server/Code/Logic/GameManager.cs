@@ -29,6 +29,7 @@ namespace BotWars2Server.Code.Logic
                 tracks.Add(new Track(player));
             }
             this.Arena.Tracks = tracks;
+            this.SetStartPositions();
 
             foreach (var player in this.Arena.Players)
             {
@@ -63,6 +64,20 @@ namespace BotWars2Server.Code.Logic
                     Application.DoEvents();
                     Thread.Sleep(5);
                 }
+            }
+        }
+
+        /// <summary>
+        /// Assigns each bot to a random start position
+        /// </summary>
+        private void SetStartPositions()
+        {
+            var random = new Random();
+            foreach(var bot in this.Arena.Players)
+            {
+                bot.Position = new Position(
+                    random.Next(10, this.Arena.Width - 10),
+                    random.Next(10, this.Arena.Height - 10));
             }
         }
 
@@ -110,22 +125,28 @@ namespace BotWars2Server.Code.Logic
             return diffX + diffY == 1;
         }
 
+        /// <summary>
+        /// Sent a start instruction to tell the bots where they are
+        /// </summary>
         private void SendStartInstructions(Player player)
         {
-            // This is where we tell the player what the game is and what's going on
-            throw new NotImplementedException();
+            player.SendStartInstruction(this.Arena);
         }
 
+        /// <summary>
+        /// Updates the player on the current Arena state
+        /// </summary>
         private void UpdatePlayersOnArena(Player player)
         {
-            // This is where we will tell the players what is going on in the game
-            throw new NotImplementedException();
+            player.UpdateState(this.Arena);
         }
 
+        /// <summary>
+        /// Ask the player what we they want to do
+        /// </summary>
         private Position GetMoveFromPlayer(Player player)
         {
-            // This is where we ask each player what we they want to do
-            throw new NotImplementedException();
+            return player.GetMove();
         }
     }
 }
