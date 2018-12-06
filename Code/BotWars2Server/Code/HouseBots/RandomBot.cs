@@ -15,14 +15,20 @@ namespace BotWars2Server.Code.HouseBots
 
         public RandomBot() : base("Random Bot")
         {
-            this.Random = new Random();
+            this.Random = new Random(Guid.NewGuid().GetHashCode());
         }
 
         public override Position GetMove()
         {
             if (!this.RemainingMoves.HasValue || this.RemainingMoves.Value <= 0)
             {
-                this.Direction = this.Random.Next(0, 5);
+                var previousDirection = this.Direction;
+                this.Direction = this.Random.Next(0, 4);
+                if (this.Direction == 0 && previousDirection == 1) this.Direction = 2;
+                if (this.Direction == 1 && previousDirection == 0) this.Direction = 3;
+                if (this.Direction == 2 && previousDirection == 3) this.Direction = 0;
+                if (this.Direction == 3 && previousDirection == 2) this.Direction = 1;
+
                 this.RemainingMoves = this.Random.Next(30);
             }
 
