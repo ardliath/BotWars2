@@ -48,7 +48,7 @@ namespace BotWars2Server.Code.Logic
                     }
                 }
 
-                CheckForCollisions();
+                CheckForCollisions(this.Arena);
 
                 foreach (var player in this.Arena.Players)
                 {
@@ -61,10 +61,29 @@ namespace BotWars2Server.Code.Logic
             }
         }
 
-        private void CheckForCollisions()
+        /// <summary>
+        /// Checks if there have been any collisions and removes players from the game if there have been
+        /// </summary>
+        public static void CheckForCollisions(Arena arena)
         {
-            // Checks if there have been any collisions and removes players from the game if there have been
-            throw new NotImplementedException();
+            foreach(var player in arena.Players.Where(p => p.IsAlive))
+            {
+                var otherTracks = arena.Tracks
+                    .Where(t => !t.Player.Equals(player))
+                    .SelectMany(t => t.PreviousPositions);
+
+                var playerTrack = arena.Tracks
+                    .Single(t => t.Player.Equals(player))?.PreviousPositions;
+
+                var dangerousTracks = arena.ArenaOptions.CrossingOwnTrackCausesDestruction
+                    ? otherTracks.Union(playerTrack)
+                    : otherTracks;
+
+                if (dangerousTracks.Any(p => p.Equals(player.Position)))
+                {
+                    player.IsAlive = false;
+                }
+            }
         }
 
         /// <summary>
