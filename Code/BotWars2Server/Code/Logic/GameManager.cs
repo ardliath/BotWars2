@@ -29,6 +29,7 @@ namespace BotWars2Server.Code.Logic
                 tracks.Add(new Track(player));
             }
             this.Arena.Tracks = tracks;
+            this.SetStartPositions();
 
             foreach (var player in this.Arena.Players)
             {
@@ -63,6 +64,20 @@ namespace BotWars2Server.Code.Logic
                     Application.DoEvents();
                     Thread.Sleep(5);
                 }
+            }
+        }
+
+        /// <summary>
+        /// Assigns each bot to a random start position
+        /// </summary>
+        private void SetStartPositions()
+        {
+            var random = new Random();
+            foreach(var bot in this.Arena.Players)
+            {
+                bot.Position = new Position(
+                    random.Next(10, this.Arena.Width - 10),
+                    random.Next(10, this.Arena.Height - 10));
             }
         }
 

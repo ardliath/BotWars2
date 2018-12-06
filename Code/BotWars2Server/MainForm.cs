@@ -31,8 +31,8 @@ namespace BotWars2Server
                 Height = 200,
                 Width = 200,
             },
-            new RandomBot(new Position(5, 5)),
-            new RandomBot(new Position(50, 50)));
+            new RandomBot(),
+            new RandomBot());
         }
     }
 }

@@ -1,5 +1,6 @@
 ﻿using BotWars2Server.Code.Logic;
 using BotWars2Server.Code.State;
+using Moq;
 using NUnit.Framework;
 using System;
 using System.Collections.Generic;
@@ -29,7 +30,8 @@ namespace BotWars2Server.Tests.LogicTests.GameManagerTests
         [TestCase(5, 5, 4, 4, false)]
         public void IsMoveValid(int currentX, int currentY, int newX, int newY, bool expectedIsValid)
         {
-            var player = new Player(Guid.NewGuid().ToString(), Guid.NewGuid().ToString(), new Position(currentX, currentY));
+            var player = new Mock<Player>(Guid.NewGuid().ToString()).Object;
+            player.Position = new Position(currentX, currentY);
 
             var isValid = GameManager.IsPositionValidForPlayer(player, new Position(newX, newY ));
 

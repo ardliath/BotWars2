@@ -9,7 +9,7 @@ namespace BotWars2Server.Code.HouseBots
 {
     public abstract class HouseBotBase : Player
     {
-        public HouseBotBase(string name, Position position) : base(name, position)
+        public HouseBotBase(string name) : base(name)
         {
         }
     }

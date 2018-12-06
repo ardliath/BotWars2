@@ -9,7 +9,7 @@ namespace BotWars2Server.Code.HouseBots
 {
     public class RandomBot : HouseBotBase
     {
-        public RandomBot(Position position) : base("Random Bot", position)
+        public RandomBot() : base("Random Bot")
         {
         }
 

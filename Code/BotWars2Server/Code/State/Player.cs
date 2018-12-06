@@ -13,11 +13,10 @@ namespace BotWars2Server.Code.State
 
         public bool IsAlive { get; set; }
 
-        public Player(string name, Position position)
+        public Player(string name)
         {
             this.IsAlive = true;
             Name = name;
-            Position = position;
         }
 
         public abstract Position GetMove();

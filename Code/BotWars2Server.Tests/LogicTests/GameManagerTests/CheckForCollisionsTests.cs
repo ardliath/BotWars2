@@ -1,5 +1,6 @@
 ﻿using BotWars2Server.Code.Logic;
 using BotWars2Server.Code.State;
+using Moq;
 using NUnit.Framework;
 using System;
 using System.Collections.Generic;
@@ -67,9 +68,11 @@ namespace BotWars2Server.Tests.LogicTests.GameManagerTests
         {
             var players = new Player[]
             {
-                new Player(Guid.NewGuid().ToString(), Guid.NewGuid().ToString(), playerOnePosition),
-                new Player(Guid.NewGuid().ToString(), Guid.NewGuid().ToString(), playerTwoPosition)
+                new Mock<Player>(Guid.NewGuid().ToString()).Object,
+                new Mock<Player>(Guid.NewGuid().ToString()).Object
             };
+            players.ElementAt(0).Position = playerOnePosition;
+            players.ElementAt(1).Position = playerTwoPosition;
             var arena = new Arena
             {
                 Height = 100,
