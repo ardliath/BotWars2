@@ -328,3 +328,5 @@ ASALocalRun/
 
 # MFractors (Xamarin productivity tool) working folder 
 .mfractor/
+Code/BotWars2Server.v3.ncrunchsolution
+Code/BotWars2Server/BotWars2Server.v3.ncrunchproject

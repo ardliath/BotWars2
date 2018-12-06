@@ -70,12 +70,20 @@ namespace BotWars2Server.Code.Logic
         /// <summary>
         /// Returns a bool indicating whether the player can move to the position
         /// </summary>
-        /// <param name="player"></param>
-        /// <param name="newPosition"></param>
-        /// <returns></returns>
-        private bool IsPositionValidForPlayer(Player player, Position newPosition)
+        /// <param name="player">The player who wants to move</param>
+        /// <param name="newPosition">Their current position</param>
+        /// <returns>A bool indicating whether the given move is valid</returns>
+        public static bool IsPositionValidForPlayer(Player player, Position newPosition)
         {            
-            throw new NotImplementedException();
+            if(player.Position.Equals(newPosition))
+            {
+                return false;
+            }
+
+            var diffX = Math.Abs(player.Position.X - newPosition.X);
+            var diffY = Math.Abs(player.Position.Y - newPosition.Y);
+
+            return diffX + diffY == 1;
         }
 
         private void SendStartInstructions(Player player)
