@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using System.Windows.Forms;
 
 namespace BotWars2Server.Code.Logic
 {
@@ -57,7 +58,11 @@ namespace BotWars2Server.Code.Logic
 
                 updateAction(this.Arena);
 
-                Thread.Sleep(100);
+                for (int i = 0; i < 20; i++)
+                {
+                    Application.DoEvents();
+                    Thread.Sleep(5);
+                }
             }
         }
 
