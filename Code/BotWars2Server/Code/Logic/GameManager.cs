@@ -71,7 +71,7 @@ namespace BotWars2Server.Code.Logic
         /// The Size of the Internal Circle.
         /// </summary>
         /// <param name="paddingFromEdge">How close the players will be to the edge</param>
-        private void SetStartPositions(int paddingFromEdge = 50)
+        public void SetStartPositions(int paddingFromEdge = 50)
         {
             var radius = (this.Arena.Width - (paddingFromEdge * 2)) / 2;
             Position centrepoint = new Position(this.Arena.Width / 2, this.Arena.Height / 2);

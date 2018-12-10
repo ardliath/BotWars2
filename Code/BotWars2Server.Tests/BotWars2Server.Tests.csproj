@@ -63,6 +63,7 @@
   <ItemGroup>
     <Compile Include="LogicTests\GameManagerTests\CheckForCollisionsTests.cs" />
     <Compile Include="LogicTests\GameManagerTests\IsPositionValidForPlayerTests.cs" />
+    <Compile Include="LogicTests\GameManagerTests\SetStartPositionsTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="TestTests.cs" />
   </ItemGroup>
