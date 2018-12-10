@@ -32,6 +32,12 @@ namespace BotWars2Server
                 Width = 200,
             },
             new RandomBot(),
+            new RandomBot(),
+            new RandomBot(),
+            new RandomBot(),
+            new RandomBot(),
+            new RandomBot(),
+            new RandomBot(),
             new RandomBot());
         }
     }

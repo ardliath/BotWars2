@@ -29,7 +29,7 @@ namespace BotWars2Server.Code.Logic
                 tracks.Add(new Track(player));
             }
             this.Arena.Tracks = tracks;
-            this.SetStartPositions();
+            this.SetStartPositions(50);
 
             foreach (var player in this.Arena.Players)
             {
@@ -68,17 +68,29 @@ namespace BotWars2Server.Code.Logic
         }
 
         /// <summary>
-        /// Assigns each bot to a random start position
+        /// Assigns each bot to there start positions by drawing a circle and spreading players evenly around the edges.
         /// </summary>
-        private void SetStartPositions()
+        private void SetStartPositions(int radius)
         {
-            var random = new Random();
-            foreach(var bot in this.Arena.Players)
+
+            Position centrepoint = new Position(this.Arena.Width / 2, this.Arena.Height / 2);
+            var currentAngle = 0;
+
+            foreach (var player in this.Arena.Players)
             {
-                bot.Position = new Position(
-                    random.Next(10, this.Arena.Width - 10),
-                    random.Next(10, this.Arena.Height - 10));
+                var xcoords = (Math.Round(radius * (Math.Cos(currentAngle * (Math.PI / 180)))));
+                var ycoords = (Math.Round(radius * (Math.Sin(currentAngle * (Math.PI / 180)))));
+                player.Position = new Position((int)xcoords + centrepoint.X, (int)ycoords + centrepoint.Y);
+                currentAngle = currentAngle + 360 / this.Players.Count();
             }
+
+            //var random = new Random();
+            //foreach(var bot in this.Arena.Players)
+            //{
+            //    bot.Position = new Position(
+            //        random.Next(10, this.Arena.Width - 10),
+            //        random.Next(10, this.Arena.Height - 10));
+            //}
         }
 
         /// <summary>
