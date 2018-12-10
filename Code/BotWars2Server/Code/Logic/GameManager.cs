@@ -74,7 +74,6 @@ namespace BotWars2Server.Code.Logic
         private void SetStartPositions(int paddingFromEdge = 50)
         {
             var radius = (this.Arena.Width - (paddingFromEdge * 2)) / 2;
-
             Position centrepoint = new Position(this.Arena.Width / 2, this.Arena.Height / 2);
             var currentAngle = 0;
 
