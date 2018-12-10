@@ -29,7 +29,7 @@ namespace BotWars2Server.Code.Logic
                 tracks.Add(new Track(player));
             }
             this.Arena.Tracks = tracks;
-            this.SetStartPositions(50);
+            this.SetStartPositions();
 
             foreach (var player in this.Arena.Players)
             {
@@ -68,10 +68,12 @@ namespace BotWars2Server.Code.Logic
         }
 
         /// <summary>
-        /// Assigns each bot to there start positions by drawing a circle and spreading players evenly around the edges.
+        /// The Size of the Internal Circle.
         /// </summary>
-        private void SetStartPositions(int radius)
+        /// <param name="paddingFromEdge">How close the players will be to the edge</param>
+        private void SetStartPositions(int paddingFromEdge = 50)
         {
+            var radius = (this.Arena.Width - (paddingFromEdge * 2)) / 2;
 
             Position centrepoint = new Position(this.Arena.Width / 2, this.Arena.Height / 2);
             var currentAngle = 0;
