@@ -83,14 +83,6 @@ namespace BotWars2Server.Code.Logic
                 player.Position = new Position((int)xcoords + centrepoint.X, (int)ycoords + centrepoint.Y);
                 currentAngle = currentAngle + 360 / this.Players.Count();
             }
-
-            //var random = new Random();
-            //foreach(var bot in this.Arena.Players)
-            //{
-            //    bot.Position = new Position(
-            //        random.Next(10, this.Arena.Width - 10),
-            //        random.Next(10, this.Arena.Height - 10));
-            //}
         }
 
         /// <summary>
