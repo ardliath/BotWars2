@@ -24,5 +24,10 @@
         {
             return (this.X * this.Y * 27).GetHashCode();
         }
+
+        public override string ToString()
+        {
+            return string.Concat(this.X, ",", this.Y);
+        }
     }
 }

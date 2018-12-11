@@ -68,16 +68,21 @@ namespace BotWars2Server.Code.Logic
         }
 
         /// <summary>
-        /// Assigns each bot to a random start position
+        /// The Size of the Internal Circle.
         /// </summary>
-        private void SetStartPositions()
+        /// <param name="paddingFromEdge">How close the players will be to the edge</param>
+        public void SetStartPositions(int paddingFromEdge = 50)
         {
-            var random = new Random();
-            foreach(var bot in this.Arena.Players)
+            var radius = (this.Arena.Width - (paddingFromEdge * 2)) / 2;
+            Position centrepoint = new Position(this.Arena.Width / 2, this.Arena.Height / 2);
+            var currentAngle = 0;
+
+            foreach (var player in this.Arena.Players)
             {
-                bot.Position = new Position(
-                    random.Next(10, this.Arena.Width - 10),
-                    random.Next(10, this.Arena.Height - 10));
+                var xcoords = (Math.Round(radius * (Math.Cos(currentAngle * (Math.PI / 180)))));
+                var ycoords = (Math.Round(radius * (Math.Sin(currentAngle * (Math.PI / 180)))));
+                player.Position = new Position((int)xcoords + centrepoint.X, (int)ycoords + centrepoint.Y);
+                currentAngle = currentAngle + 360 / this.Players.Count();
             }
         }
 
