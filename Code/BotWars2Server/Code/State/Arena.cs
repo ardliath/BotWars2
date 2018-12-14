@@ -15,11 +15,14 @@ namespace BotWars2Server.Code.State
         public IEnumerable<Player> Players { get; set; }
         public IEnumerable<Track> Tracks { get; set; }
 
+        public IEnumerable<List<Position>> Walls { get; set; }
+
 
         public Arena(int zoom = 5)
         {
             this.Zoom = zoom;
             this.ArenaOptions = new ArenaOptions();
+            this.Walls = new List<Position>[] { };
         }
     }
 }

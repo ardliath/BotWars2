@@ -26,13 +26,15 @@ namespace BotWars2Server
 
             var gf = new GameForm();
             gf.Show();
-            gf.StartGame(new Arena
+            var arena = new Arena
             {
                 Height = 200,
                 Width = 200,
-            },
+            };
+            arena.ArenaOptions.BoundaryStyle = BoundaryStyle.Walled;
+            gf.StartGame(arena,
             new RandomBot(),
-            new RandomBot());
+            new DeterminedBot());
         }
     }
 }

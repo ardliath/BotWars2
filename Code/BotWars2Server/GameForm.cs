@@ -50,6 +50,14 @@ namespace BotWars2Server
                             gfx.FillEllipse(Brushes.Aquamarine, new RectangleF(new Point(player.Position.X - arena.Zoom, player.Position.Y - arena.Zoom), new Size(arena.Zoom * 2, arena.Zoom * 2)));
                         }
                     }
+
+                    foreach(var wall in arena.Walls)
+                    {
+                        foreach (var brick in wall)
+                        {
+                            DrawPreviousPosition(gfx, brick, arena);
+                        }
+                    }
                 }
 
                 using (var gfx = this.pictureBox1.CreateGraphics())
