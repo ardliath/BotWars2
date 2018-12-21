@@ -1,4 +1,5 @@
-﻿using System;
+﻿using BotWars2Server.Code.Communication;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -16,6 +17,7 @@ namespace BotWars2Server
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
+            var listener = new HttpListenerClass(5999, new Code.HouseBots.RandomBot());
             Application.Run(new MainForm());
         }
     }
