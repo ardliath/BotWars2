@@ -17,7 +17,7 @@ namespace BotWars2Server
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            var listener = new HttpListenerClass(5999, new Code.HouseBots.RandomBot());
+            var listener = new HttpListenerClass(5999);
             Application.Run(new MainForm());
         }
     }

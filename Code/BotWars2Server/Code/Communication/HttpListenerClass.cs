@@ -19,7 +19,7 @@ namespace BotWars2Server.Code.Communication
             "default.html",
             "default.htm"
         };
-        private readonly Player _bot;
+        
         private IDictionary<string, string> _mimeTypeMappings =
             new Dictionary<string, string>(StringComparer.InvariantCultureIgnoreCase)
             {
@@ -106,10 +106,9 @@ namespace BotWars2Server.Code.Communication
         /// Construct server with given port.
         /// </summary>
         /// <param name="port">Port of the server.</param>
-        public HttpListenerClass(int port, Player bot)
+        public HttpListenerClass(int port)
         {
             this.Initialize(port);
-            _bot = bot;
         }
 
 
