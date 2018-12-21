@@ -46,6 +46,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Code\Communication\HttpListenerClass.cs" />
     <Compile Include="Code\Communication\RemoteBot.cs" />
     <Compile Include="Code\HouseBots\HouseBotBase.cs" />
     <Compile Include="Code\HouseBots\RandomBot.cs" />
