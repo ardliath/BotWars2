@@ -1,5 +1,6 @@
 ﻿using BotWars2Server.Code.Communication;
 using BotWars2Server.Code.HouseBots;
+using BotWars2Server.Code.Logic;
 using BotWars2Server.Code.State;
 using System;
 using System.Collections.Generic;
@@ -15,10 +16,13 @@ namespace BotWars2Server
 {
     public partial class MainForm : Form
     {
-        public MainForm()
+        public MainForm(Commander commander)
         {
             InitializeComponent();
+            Commander = commander;
         }
+
+        public Commander Commander { get; }
 
         protected override void OnLoad(EventArgs e)
         {

@@ -1,4 +1,5 @@
 ﻿using BotWars2Server.Code.State;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -19,7 +20,8 @@ namespace BotWars2Server.Code.Communication
             "default.html",
             "default.htm"
         };
-        
+
+        private readonly ICommander _commander;
         private IDictionary<string, string> _mimeTypeMappings =
             new Dictionary<string, string>(StringComparer.InvariantCultureIgnoreCase)
             {
@@ -106,9 +108,10 @@ namespace BotWars2Server.Code.Communication
         /// Construct server with given port.
         /// </summary>
         /// <param name="port">Port of the server.</param>
-        public HttpListenerClass(int port)
+        public HttpListenerClass(int port, ICommander commander)
         {
             this.Initialize(port);
+            this.commander = commander;
         }
 
 
@@ -176,40 +179,14 @@ namespace BotWars2Server.Code.Communication
 
         private void ProcessRegisterMessage(string messageBody)
         {
-            //int health = 0;
-            //int flips = 0;
-            //int flipOdds = 0;
-            //int fuel = 0;
-            //int arenaSize = 0;
-            //char direction = 'R';
-            //int startPosition = 0;
-
-            //string opponentName = string.Empty;
-
-            //string[] parameters = messageBody.Split(new char[] { '&' });
-            //foreach (var parameter in parameters)
-            //{
-            //    if (parameter.Contains('='))
-            //    {
-            //        string paramName = parameter.Split(new char[] { '=' })[0];
-            //        string paramValue = parameter.Split(new char[] { '=' })[1];
-        
-
-            //Console.WriteLine(string.Format("START Opponentname={0} Health={1} ArenaSize= {2} Flips={3} FlipOdds={4} Direction={5} Fuel={6} StartPosition={7}",
-            //    opponentName,
-            //    health,
-            //    arenaSize,
-            //    flips,
-            //    flipOdds,
-            //    direction,
-            //    fuel,
-            //    startPosition));
-
-            //_bot.SetStartValues(opponentName, health, arenaSize, flips, flipOdds, fuel, direction, startPosition);
+            var data = JsonConvert.DeserializeObject<RegisterData>(messageBody);            
+            _commander.Register(data);
         }
 
         private void ProcessTurnMessage(string messageBody)
-        {            
+        {
+            var data = JsonConvert.DeserializeObject<TurnData>(messageBody);
+            _commander.Turn(data);
         }
 
 
