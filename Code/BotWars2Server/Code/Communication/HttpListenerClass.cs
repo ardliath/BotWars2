@@ -131,21 +131,22 @@ namespace BotWars2Server.Code.Communication
             while (true)
             {
                 HttpListenerContext context = _listener.GetContext();
-                Process(context);
+                ProcessIncomingMessage(context);
             }
         }
 
 
-        private void Process(HttpListenerContext context)
+        private void ProcessIncomingMessage(HttpListenerContext context)
         {
-            string body = string.Empty;
+            string body = null;
             StreamReader sr = new StreamReader(context.Request.InputStream);
             using (sr)
             {
                 body = sr.ReadToEnd();
             }
 
-            switch (context.Request.Url.AbsolutePath.Replace("/", ""))
+            var method = context.Request.Url.AbsolutePath.Replace("/", "");
+            switch (method)
             {
                 case "start":
                     {
