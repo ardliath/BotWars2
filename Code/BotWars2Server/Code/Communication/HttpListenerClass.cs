@@ -145,179 +145,72 @@ namespace BotWars2Server.Code.Communication
                 body = sr.ReadToEnd();
             }
 
-            var method = context.Request.Url.AbsolutePath.Replace("/", "");
+            var method = context.Request.Url.AbsolutePath.Replace("/", "").ToLower();
             switch (method)
             {
-                case "start":
+                case "register":
+                    ProcessRegisterMessage(body);
+                    context.Response.StatusCode = (int)HttpStatusCode.OK;
+                    context.Response.ContentType = "text/plain";
+                    using (StreamWriter sw = new StreamWriter(context.Response.OutputStream))
                     {
-                        ProcessStartResponse(body);
-                        context.Response.StatusCode = (int)HttpStatusCode.OK;
-                        context.Response.ContentType = "text/plain";
-                        StreamWriter sw = new StreamWriter(context.Response.OutputStream);
+                        sw.WriteLine(context.Request.RawUrl);
+                    }
+
+                    break;
+
+                case "turn":
+                    ProcessTurnMessage(body);
+                    context.Response.StatusCode = (int)HttpStatusCode.OK;
+                    context.Response.ContentType = "text/plain";
+                    using (StreamWriter sw = new StreamWriter(context.Response.OutputStream))
+                    {
                         using (sw)
                         {
                             sw.WriteLine(context.Request.RawUrl);
                         }
-
-                        break;
                     }
-                case "flipped":
-                    {
-                        ProcessFlippedResponse(body);
-                        context.Response.StatusCode = (int)HttpStatusCode.OK;
-                        context.Response.ContentType = "text/plain";
-                        StreamWriter sw = new StreamWriter(context.Response.OutputStream);
-                        using (sw)
-                        {
-                            sw.WriteLine(context.Request.RawUrl);
-                        }
 
-                        break;
-                    }
-                case "opponentflipped":
-                    {
-                        ProcessOpponentFlippedResponse(body);
-                        context.Response.StatusCode = (int)HttpStatusCode.OK;
-                        context.Response.ContentType = "text/plain";
-                        StreamWriter sw = new StreamWriter(context.Response.OutputStream);
-                        using (sw)
-                        {
-                            sw.WriteLine(context.Request.RawUrl);
-                        }
-
-                        break;
-                    }
-                case "move":
-                    {
-                        if (context.Request.HttpMethod.ToLower() == "get")
-                        {
-
-                            StreamWriter sww = new StreamWriter(context.Response.OutputStream);
-                            var move = _bot.GetMove();
-                            string responsestr = "Response";// Enum.GetName(typeof(Move), move);
-                            Console.WriteLine(string.Format("My move {0}", responsestr));
-
-
-                            context.Response.ContentLength64 = responsestr.Length;
-                            sww.Write(responsestr);
-
-
-                            sww.Flush();
-                            sww.Close();
-                            context.Response.OutputStream.Close();
-                            context.Response.Close();
-                            break;
-                        }
-                        else
-                        {
-                            string lastMoveVal = "Something";
-                            //if (!Enum.TryParse(body, out lastMoveVal))
-                            //{
-                            //    lastMoveVal = Move.Invalid;
-                            //}
-                            //_bot.CaptureOpponentsLastMove(lastMoveVal);
-                            Console.WriteLine(string.Format("Their move {0}", body));
-                            context.Response.StatusCode = (int)HttpStatusCode.OK;
-                            context.Response.ContentType = "text/plain";
-                            StreamWriter sw = new StreamWriter(context.Response.OutputStream);
-                            using (sw)
-                            {
-                                sw.WriteLine(context.Request.RawUrl);
-                            }
-
-                        }
-                        break;
-                    }
+                    break;
             }
         }
 
-        private void ProcessStartResponse(string responseBody)
+        private void ProcessRegisterMessage(string messageBody)
         {
-            int health = 0;
-            int flips = 0;
-            int flipOdds = 0;
-            int fuel = 0;
-            int arenaSize = 0;
-            char direction = 'R';
-            int startPosition = 0;
+            //int health = 0;
+            //int flips = 0;
+            //int flipOdds = 0;
+            //int fuel = 0;
+            //int arenaSize = 0;
+            //char direction = 'R';
+            //int startPosition = 0;
 
-            string opponentName = string.Empty;
+            //string opponentName = string.Empty;
 
-            string[] parameters = responseBody.Split(new char[] { '&' });
-            foreach (var parameter in parameters)
-            {
-                if (parameter.Contains('='))
-                {
-                    string paramName = parameter.Split(new char[] { '=' })[0];
-                    string paramValue = parameter.Split(new char[] { '=' })[1];
+            //string[] parameters = messageBody.Split(new char[] { '&' });
+            //foreach (var parameter in parameters)
+            //{
+            //    if (parameter.Contains('='))
+            //    {
+            //        string paramName = parameter.Split(new char[] { '=' })[0];
+            //        string paramValue = parameter.Split(new char[] { '=' })[1];
+        
 
-                    switch (paramName.ToLower())
-                    {
-
-                        case "health":
-                            {
-                                health = int.Parse(paramValue);
-                                break;
-                            }
-                        case "flips":
-                            {
-                                flips = int.Parse(paramValue);
-                                break;
-                            }
-                        case "flipOdds":
-                            {
-                                flipOdds = int.Parse(paramValue);
-                                break;
-                            }
-                        case "direction":
-                            {
-                                direction = char.Parse(paramValue);
-                                break;
-                            }
-                        case "fuel":
-                            {
-                                fuel = int.Parse(paramValue);
-                                break;
-                            }
-                        case "arenasize":
-                            {
-                                arenaSize = int.Parse(paramValue);
-                                break;
-                            }
-                        case "opponentname":
-                            {
-                                opponentName = paramValue;
-                            }
-
-                            break;
-                        case "startposition":
-                            startPosition = int.Parse(paramValue);
-                            break;
-                    }
-                }
-            }
-
-            Console.WriteLine(string.Format("START Opponentname={0} Health={1} ArenaSize= {2} Flips={3} FlipOdds={4} Direction={5} Fuel={6} StartPosition={7}",
-                opponentName,
-                health,
-                arenaSize,
-                flips,
-                flipOdds,
-                direction,
-                fuel,
-                startPosition));
+            //Console.WriteLine(string.Format("START Opponentname={0} Health={1} ArenaSize= {2} Flips={3} FlipOdds={4} Direction={5} Fuel={6} StartPosition={7}",
+            //    opponentName,
+            //    health,
+            //    arenaSize,
+            //    flips,
+            //    flipOdds,
+            //    direction,
+            //    fuel,
+            //    startPosition));
 
             //_bot.SetStartValues(opponentName, health, arenaSize, flips, flipOdds, fuel, direction, startPosition);
         }
 
-        private void ProcessFlippedResponse(string responseBody)
-        {
-            //_bot.SetFlippedStatus(true);
-        }
-
-        private void ProcessOpponentFlippedResponse(string responseBody)
-        {
-            //_bot.SetOpponentFlippedStatus(true);
+        private void ProcessTurnMessage(string messageBody)
+        {            
         }
 
 
