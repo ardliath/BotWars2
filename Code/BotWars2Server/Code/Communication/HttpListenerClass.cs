@@ -111,7 +111,7 @@ namespace BotWars2Server.Code.Communication
         public HttpListenerClass(int port, ICommander commander)
         {
             this.Initialize(port);
-            this.commander = commander;
+            _commander = commander;
         }
 
 
