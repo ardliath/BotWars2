@@ -28,7 +28,7 @@ namespace BotWars2Server
         {
             base.OnLoad(e);
 
-            var gf = new GameForm();
+            var gf = new GameForm(this.Commander);
             gf.Show();
             gf.StartGame(new Arena
             {

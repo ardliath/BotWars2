@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using BotWars2Server.Code.Communication;
 
 namespace BotWars2Server.Code.State
 {
@@ -12,6 +13,7 @@ namespace BotWars2Server.Code.State
         public Position Position { get; set; }
 
         public bool IsAlive { get; set; }
+        public TurnData CurrentCommand { get; internal set; }
 
         public Player(string name)
         {

@@ -2,5 +2,6 @@
 {
     public class TurnData
     {
+        public string Name { get; set; }
     }
 }
