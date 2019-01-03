@@ -44,6 +44,7 @@ namespace BotWars2Server
                 lock (this.Players)
                 {
                     this.Players.Add(new RemoteBot(data.Name, "http://localhost:12345"));
+                    this.ListPlayers();
                 }
             }
         }
@@ -51,6 +52,8 @@ namespace BotWars2Server
         protected override void OnLoad(EventArgs e)
         {
             base.OnLoad(e);
+
+            this.ListPlayers();
         }
 
         private void button1_Click(object sender, EventArgs e)
@@ -63,6 +66,20 @@ namespace BotWars2Server
                 Width = 200,
             },
             this.Players.ToArray());
+        }
+
+        public delegate void ListPlayersDelegate();
+
+        public void ListPlayers()
+        {
+            if (InvokeRequired)
+            {
+                Invoke(new ListPlayersDelegate(ListPlayers));
+            }
+            else
+            {
+                this.label1.Text = string.Join(", ", this.Players.Select(p => p.Name));
+            }        
         }
     }
 }
