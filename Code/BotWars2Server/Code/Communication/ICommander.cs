@@ -1,4 +1,5 @@
 ﻿using BotWars2Server.Code.State;
+using System;
 using System.Collections.Generic;
 
 namespace BotWars2Server.Code.Communication
@@ -7,6 +8,8 @@ namespace BotWars2Server.Code.Communication
     {
         void Register(RegisterData data);
         void Turn(TurnData data);
-        void RegisterPlayers(IEnumerable<RemoteBot> players);
+        void RegisterPlayersActiveInGame(IEnumerable<RemoteBot> players);
+
+        void RegisterRegistrationAction(Action<RegisterData> action);
     }
 }

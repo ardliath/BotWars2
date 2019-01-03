@@ -2,6 +2,7 @@
 using BotWars2Server.Code.Communication;
 using BotWars2Server.Code.State;
 using System.Linq;
+using System;
 
 namespace BotWars2Server.Code.Logic
 {
@@ -13,13 +14,19 @@ namespace BotWars2Server.Code.Logic
         }
 
         public Dictionary<string, RemoteBot> Players { get; set; }
+        public Action<RegisterData> RegistrationAction { get; set; }
 
         public void Register(RegisterData data)
         {
-            throw new System.NotImplementedException();
+            this.RegistrationAction?.Invoke(data);
         }
 
-        public void RegisterPlayers(IEnumerable<RemoteBot> players)
+        public void RegisterRegistrationAction(Action<RegisterData> action)
+        {
+            this.RegistrationAction = action;
+        }
+
+        public void RegisterPlayersActiveInGame(IEnumerable<RemoteBot> players)
         {
             this.Players = players.ToDictionary(x => x.Name, x => x);
         }

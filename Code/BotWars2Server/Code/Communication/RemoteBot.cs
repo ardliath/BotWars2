@@ -22,9 +22,16 @@ namespace BotWars2Server.Code.Communication
 
         public override Position GetMove()
         {
-            lock (this.CurrentCommand)
+            if (this.CurrentCommand != null)
             {
-                return this.Position; // This is called when the game asks the bot what it wants to do. The latest CurrentCommand sent by the bot is stored
+                lock (this.CurrentCommand)
+                {
+                    return this.Position; // This is called when the game asks the bot what it wants to do. The latest CurrentCommand sent by the bot is stored
+                }
+            }
+            else
+            {
+                return this.Position;
             }
         }
 

@@ -2,5 +2,6 @@
 {
     public class RegisterData
     {
+        public string Name { get; set; }
     }
 }
