@@ -7,6 +7,6 @@ namespace BotWars2Server.Code.Communication
     {
         void Register(RegisterData data);
         void Turn(TurnData data);
-        void RegisterPlayers(IEnumerable<Player> players);
+        void RegisterPlayers(IEnumerable<RemoteBot> players);
     }
 }

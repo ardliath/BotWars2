@@ -13,6 +13,8 @@ namespace BotWars2Server.Code.Communication
 
         public string Uri { get; set; }
 
+        public TurnData CurrentCommand { get; internal set; }
+
         public RemoteBot(string name, string uri) : base(name)
         {
             this.Uri = uri;

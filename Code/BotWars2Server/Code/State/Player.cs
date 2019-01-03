@@ -12,8 +12,7 @@ namespace BotWars2Server.Code.State
         public string Name { get; set; }        
         public Position Position { get; set; }
 
-        public bool IsAlive { get; set; }
-        public TurnData CurrentCommand { get; internal set; }
+        public bool IsAlive { get; set; }        
 
         public Player(string name)
         {

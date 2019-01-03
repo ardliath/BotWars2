@@ -9,17 +9,17 @@ namespace BotWars2Server.Code.Logic
     {
         public Commander()
         {
-            this.Players = new Dictionary<string, Player>();
+            this.Players = new Dictionary<string, RemoteBot>();
         }
 
-        public Dictionary<string, Player> Players { get; set; }
+        public Dictionary<string, RemoteBot> Players { get; set; }
 
         public void Register(RegisterData data)
         {
             throw new System.NotImplementedException();
         }
 
-        public void RegisterPlayers(IEnumerable<Player> players)
+        public void RegisterPlayers(IEnumerable<RemoteBot> players)
         {
             this.Players = players.ToDictionary(x => x.Name, x => x);
         }

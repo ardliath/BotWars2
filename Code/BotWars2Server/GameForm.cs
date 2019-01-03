@@ -26,7 +26,7 @@ namespace BotWars2Server
 
         public void StartGame(Arena arena, params Player[] players)
         {
-            this.Commander.RegisterPlayers(players);
+            this.Commander.RegisterPlayers(players.OfType<RemoteBot>()); // register the remote bots with the listener
             var gameManager = new GameManager(arena, players);
 
             gameManager.Play(Update);
