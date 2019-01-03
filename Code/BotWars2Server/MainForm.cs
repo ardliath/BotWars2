@@ -36,7 +36,7 @@ namespace BotWars2Server
                 Width = 200,
             },
             new RandomBot(),
-            new RandomBot());
+            new RemoteBot("Remote Bot", "http://localhost:12345"));
         }
     }
 }

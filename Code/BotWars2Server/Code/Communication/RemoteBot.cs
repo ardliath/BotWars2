@@ -22,7 +22,7 @@ namespace BotWars2Server.Code.Communication
 
         public override Position GetMove()
         {
-            throw new NotImplementedException();
+            return this.Position;
         }
 
         public override void UpdateState(Arena arena)
