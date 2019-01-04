@@ -26,6 +26,7 @@ namespace BotWars2Server.Code.Logic
             var tracks = new List<Track>();
             foreach(var player in this.Players)
             {
+                player.MaximumTailLength = this.Arena.ArenaOptions.StartingMaximumTailLength;
                 tracks.Add(new Track(player));
             }
             this.Arena.Tracks = tracks;
@@ -42,11 +43,17 @@ namespace BotWars2Server.Code.Logic
                 foreach(var player in this.Arena.Players.Where(p => p.IsAlive))
                 {
                     var newPosition = this.GetMoveFromPlayer(player);
+                    var track = this.Arena.Tracks.SingleOrDefault(t => t.Player.Equals(player));
                     if (IsPositionValidForPlayer(player, newPosition))
-                    {
-                        var track = this.Arena.Tracks.SingleOrDefault(t => t.Player.Equals(player));
+                    {                        
                         track?.PreviousPositions.Add(player.Position);
-                        player.Position = newPosition;
+                        player.Position = newPosition;                        
+                    }
+                    if(player.MaximumTailLength.HasValue
+                        && player.MaximumTailLength.Value < track.PreviousPositions.Count())
+                    {
+                        var numberToRemove = track.PreviousPositions.Count() - player.MaximumTailLength.Value;
+                        track.PreviousPositions = track.PreviousPositions.Skip(numberToRemove).ToList();
                     }
                 }
 

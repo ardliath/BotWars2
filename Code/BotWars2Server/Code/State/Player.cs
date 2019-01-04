@@ -14,6 +14,11 @@ namespace BotWars2Server.Code.State
 
         public bool IsAlive { get; set; }        
 
+        /// <summary>
+        /// The maximum number of spaces a player can have in their tail (null means no limit), this value can be adjusted as the game is played
+        /// </summary>
+        public int? MaximumTailLength { get; internal set; }
+
         public Player(string name)
         {
             this.IsAlive = true;
