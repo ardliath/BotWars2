@@ -6,7 +6,7 @@ namespace BotWars2Server.Code.State
     {
         public Player Player;
 
-        public IList<Position> PreviousPositions { get; protected set; }
+        public IList<Position> PreviousPositions { get; set; }
 
         public Track(Player player)
         {
