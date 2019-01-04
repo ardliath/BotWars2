@@ -7,6 +7,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BotWars2Server", "BotWars2S
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BotWars2Server.Tests", "BotWars2Server.Tests\BotWars2Server.Tests.csproj", "{1103C75B-3BEB-4111-876F-E2E83A248E3D}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BotWars2.ClientBot", "BotWars2.ClientBot\BotWars2.ClientBot.csproj", "{E25547E4-4B51-4189-AE6D-23D51E53E0A6}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +23,10 @@ Global
 		{1103C75B-3BEB-4111-876F-E2E83A248E3D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{1103C75B-3BEB-4111-876F-E2E83A248E3D}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{1103C75B-3BEB-4111-876F-E2E83A248E3D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E25547E4-4B51-4189-AE6D-23D51E53E0A6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E25547E4-4B51-4189-AE6D-23D51E53E0A6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E25547E4-4B51-4189-AE6D-23D51E53E0A6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E25547E4-4B51-4189-AE6D-23D51E53E0A6}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
