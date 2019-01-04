@@ -13,6 +13,8 @@ namespace BotWars2Server.Code.Communication
 
         public string Uri { get; set; }
 
+        public TurnData CurrentCommand { get; internal set; }
+
         public RemoteBot(string name, string uri) : base(name)
         {
             this.Uri = uri;
@@ -20,7 +22,17 @@ namespace BotWars2Server.Code.Communication
 
         public override Position GetMove()
         {
-            throw new NotImplementedException();
+            if (this.CurrentCommand != null)
+            {
+                lock (this.CurrentCommand)
+                {
+                    return this.Position; // This is called when the game asks the bot what it wants to do. The latest CurrentCommand sent by the bot is stored
+                }
+            }
+            else
+            {
+                return this.Position;
+            }
         }
 
         public override void UpdateState(Arena arena)
