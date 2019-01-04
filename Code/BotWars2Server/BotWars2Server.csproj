@@ -55,10 +55,12 @@
     <Compile Include="Code\Communication\RemoteBot.cs" />
     <Compile Include="Code\Communication\TurnData.cs" />
     <Compile Include="Code\HouseBots\HouseBotBase.cs" />
+    <Compile Include="Code\HouseBots\DeterminedBot.cs" />
     <Compile Include="Code\HouseBots\RandomBot.cs" />
     <Compile Include="Code\Logic\GameManager.cs" />
     <Compile Include="Code\State\Arena.cs" />
     <Compile Include="Code\State\ArenaOptions.cs" />
+    <Compile Include="Code\State\BoundaryStyle.cs" />
     <Compile Include="Code\State\Player.cs" />
     <Compile Include="Code\State\Position.cs" />
     <Compile Include="Code\State\Track.cs" />

@@ -31,6 +31,7 @@ namespace BotWars2Server.Code.Logic
             }
             this.Arena.Tracks = tracks;
             this.SetStartPositions();
+            this.CreateWalls();
 
             foreach (var player in this.Arena.Players)
             {
@@ -74,6 +75,31 @@ namespace BotWars2Server.Code.Logic
             }
         }
 
+        private void CreateWalls()
+        {
+            var walls = new List<List<Position>>();
+            if (this.Arena.ArenaOptions.BoundaryStyle == BoundaryStyle.Walled)
+            {
+                var thisWall = new List<Position>();
+                for (int i = 0; i < this.Arena.Width; i++) thisWall.Add(new Position(i, 0));
+                walls.Add(thisWall);
+
+                thisWall = new List<Position>();
+                for (int i = 0; i < this.Arena.Width; i++) thisWall.Add(new Position(i, this.Arena.Height));
+                walls.Add(thisWall);
+
+                thisWall = new List<Position>();
+                for (int i = 0; i < this.Arena.Height; i++) thisWall.Add(new Position(0, i));
+                walls.Add(thisWall);
+
+                thisWall = new List<Position>();
+                for (int i = 0; i < this.Arena.Height; i++) thisWall.Add(new Position(this.Arena.Width, i));
+                walls.Add(thisWall);
+            }
+
+            this.Arena.Walls = walls;
+        }
+
         /// <summary>
         /// The Size of the Internal Circle.
         /// </summary>
@@ -102,7 +128,8 @@ namespace BotWars2Server.Code.Logic
             {
                 var otherTracks = arena.Tracks
                     .Where(t => !t.Player.Equals(player))
-                    .SelectMany(t => t.PreviousPositions);
+                    .SelectMany(t => t.PreviousPositions)
+                    .Union(arena.Walls.SelectMany(w => w));
 
                 var playerTrack = arena.Tracks
                     .Single(t => t.Player.Equals(player))?.PreviousPositions;
