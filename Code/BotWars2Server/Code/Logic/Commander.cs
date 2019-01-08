@@ -34,7 +34,7 @@ namespace BotWars2Server.Code.Logic
         public void Turn(TurnData data)
         {
             var player = this.Players.ContainsKey(data.Name) ? this.Players[data.Name] : null;
-            if (player != null)
+            if (player != null && player.CurrentCommand != null)
             {
                 lock (player.CurrentCommand)
                 {
