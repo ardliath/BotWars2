@@ -43,7 +43,7 @@ namespace BotWars2Server
             {
                 lock (this.Players)
                 {
-                    this.Players.Add(new RemoteBot(data.Name, "http://localhost:12345"));
+                    this.Players.Add(new RemoteBot(data.Name, "http://localhost:6999"));
                     this.ListPlayers();
                 }
             }

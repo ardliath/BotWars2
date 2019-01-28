@@ -12,15 +12,24 @@ namespace BotWars2.ClientBot
     {
         static void Main(string[] args)
         {
-            Console.Write("Ready to send Register Command...");
+            Console.WriteLine("Ready to send Register Command...");
             Console.ReadKey();
 
             SendRegisterCommand();
 
-            Console.Write("Ready to send Turn Command...");
-            Console.ReadKey();
+            Console.WriteLine("Ready Command sent waiting for game to begin...");
+            new HttpListenerClass(6999, data =>
+            {
+                Console.WriteLine("Start Instruction recieved - we're playing");
 
-            SendTurnCommand();
+                Console.WriteLine("Ready to send Turn Command...");
+                Console.ReadKey();
+
+                SendTurnCommand();
+
+            }).Listen();
+
+            Console.ReadKey();
         }
 
         private static void SendRegisterCommand()
