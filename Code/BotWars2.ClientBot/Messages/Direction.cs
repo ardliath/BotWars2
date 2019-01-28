@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace BotWars2.ClientBot
+namespace BotWars2.ClientBot.Messages
 {
     public enum Direction
     {

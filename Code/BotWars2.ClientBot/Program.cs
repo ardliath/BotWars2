@@ -1,4 +1,5 @@
-﻿using System;
+﻿using BotWars2.ClientBot.Messages;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
