@@ -27,7 +27,7 @@ namespace BotWars2Server.Code.Logic
             foreach(var player in this.Players)
             {
                 player.MaximumTailLength = this.Arena.ArenaOptions.StartingMaximumTailLength;
-                tracks.Add(new Track(player));
+                tracks.Add(new Track(player));                
             }
             this.Arena.Tracks = tracks;
             this.SetStartPositions();

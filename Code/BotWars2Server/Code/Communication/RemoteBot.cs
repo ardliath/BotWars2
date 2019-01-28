@@ -29,12 +29,13 @@ namespace BotWars2Server.Code.Communication
             {
                 lock (this.CurrentCommand)
                 {
-                    return this.Position; // This is called when the game asks the bot what it wants to do. The latest CurrentCommand sent by the bot is stored
+                    var direction = Enum.Parse(typeof(Direction), this.CurrentCommand.Direction);
+                    return new Position(this.Position.X + 1, this.Position.Y); // move down by default
                 }
             }
             else
             {
-                return this.Position;
+                return new Position(this.Position.X, this.Position.Y + 1); // move down by default
             }
         }
 
