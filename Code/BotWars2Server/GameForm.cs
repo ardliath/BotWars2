@@ -32,7 +32,7 @@ namespace BotWars2Server
             gameManager.Play(Update);
         }
 
-        public void Update(Arena arena)
+        public void Update(Arena arena, int tick)
         {
             using (var bitmap = new Bitmap(this.pictureBox1.Width, pictureBox1.Height))
             {
@@ -58,8 +58,8 @@ namespace BotWars2Server
 
                     foreach(var wall in arena.Walls)
                     {
-                        foreach (var brick in wall)
-                        {
+                        foreach (var brick in wall.TransformBricks(arena, tick))
+                        {                            
                             DrawPreviousPosition(gfx, brick, arena);
                         }
                     }

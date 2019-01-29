@@ -20,7 +20,7 @@ namespace BotWars2Server.Code.Logic
         public Arena Arena { get; }
         public IEnumerable<Player> Players { get; }
 
-        public void Play(Action<Arena> updateAction)
+        public void Play(Action<Arena, int> updateAction)
         {
             this.Arena.Players = this.Players;
             var tracks = new List<Track>();
@@ -38,7 +38,7 @@ namespace BotWars2Server.Code.Logic
                 this.SendStartInstructions(player);
             }
 
-
+            int tick = 0;
             while (this.Arena.Players.Count(p => p.IsAlive) > 1)
             {
                 foreach(var player in this.Arena.Players.Where(p => p.IsAlive))
@@ -58,41 +58,42 @@ namespace BotWars2Server.Code.Logic
                     }
                 }
 
-                CheckForCollisions(this.Arena);
+                CheckForCollisions(this.Arena, tick);
 
                 foreach (var player in this.Arena.Players)
                 {
                     this.UpdatePlayersOnArena(player);
                 }
 
-                updateAction(this.Arena);
+                updateAction(this.Arena, tick);
 
                 for (int i = 0; i < 20; i++)
                 {
                     Application.DoEvents();
                     Thread.Sleep(5);
                 }
+                tick++;
             }
         }
 
         private void CreateWalls()
         {
-            var walls = new List<List<Position>>();
+            var walls = new List<Wall>();
             if (this.Arena.ArenaOptions.BoundaryStyle == BoundaryStyle.Walled)
             {
-                var thisWall = new List<Position>();
+                var thisWall = new Wall();
                 for (int i = 0; i < this.Arena.Width; i++) thisWall.Add(new Position(i, 0));
                 walls.Add(thisWall);
 
-                thisWall = new List<Position>();
+                thisWall = new Wall();
                 for (int i = 0; i < this.Arena.Width; i++) thisWall.Add(new Position(i, this.Arena.Height));
                 walls.Add(thisWall);
 
-                thisWall = new List<Position>();
+                thisWall = new Wall();
                 for (int i = 0; i < this.Arena.Height; i++) thisWall.Add(new Position(0, i));
                 walls.Add(thisWall);
 
-                thisWall = new List<Position>();
+                thisWall = new Wall();
                 for (int i = 0; i < this.Arena.Height; i++) thisWall.Add(new Position(this.Arena.Width, i));
                 walls.Add(thisWall);
             }
@@ -101,8 +102,11 @@ namespace BotWars2Server.Code.Logic
             for(int i = 0; i < this.Arena.ArenaOptions.InteriorWalls; i++)
             {
                 var isHorizontal = random.Next(100) < 50;
+                var doesMove = i < this.Arena.ArenaOptions.MovingWalls;
+                var moveDirectionIsHorizontal = random.Next(100) < 50;
+
                 var dimension = isHorizontal ? this.Arena.Width : this.Arena.Height;
-                int length = random.Next(5, dimension);
+                int length = random.Next(5, dimension - 20);
                 var space = dimension - length;
                 var spaceInFront = random.Next(0, space);
 
@@ -110,8 +114,16 @@ namespace BotWars2Server.Code.Logic
                 int yOffset = isHorizontal ? 0 : 1;
                 int xStart = isHorizontal ? spaceInFront : random.Next(0, this.Arena.Width);
                 int yStart = isHorizontal ? random.Next(0, this.Arena.Height) : spaceInFront;
+                const int speed = 1; // just in case we want to make this configurable in the future
 
-                var thisWall = new List<Position>();
+                var thisWall = new Wall();
+                if (doesMove)
+                {
+                    thisWall.MovementCycle = random.Next(5, space - spaceInFront);
+                    thisWall.MovementTransform = moveDirectionIsHorizontal
+                        ? new Position(speed, 0)
+                        : new Position(0, speed);
+                }
                 for (int j = 0; j < length; j++)
                 {
                     thisWall.Add(new Position(xStart + (j * xOffset), yStart + (j * yOffset)));
@@ -144,14 +156,14 @@ namespace BotWars2Server.Code.Logic
         /// <summary>
         /// Checks if there have been any collisions and removes players from the game if there have been
         /// </summary>
-        public static void CheckForCollisions(Arena arena)
+        public static void CheckForCollisions(Arena arena, int tick)
         {
             foreach(var player in arena.Players.Where(p => p.IsAlive))
             {
                 var otherTracks = arena.Tracks
                     .Where(t => !t.Player.Equals(player))
                     .SelectMany(t => t.PreviousPositions)
-                    .Union(arena.Walls.SelectMany(w => w));
+                    .Union(arena.Walls.SelectMany(w => w.TransformBricks(arena, tick)));
 
                 var playerTrack = arena.Tracks
                     .Single(t => t.Player.Equals(player))?.PreviousPositions;

@@ -70,6 +70,7 @@
     <Compile Include="Code\State\Position.cs" />
     <Compile Include="Code\State\Track.cs" />
     <Compile Include="Code\Logic\Commander.cs" />
+    <Compile Include="Code\State\Wall.cs" />
     <Compile Include="GameForm.cs">
       <SubType>Form</SubType>
     </Compile>
