@@ -46,8 +46,11 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Messages\ArenaState.cs" />
     <Compile Include="Messages\Direction.cs" />
     <Compile Include="HttpListenerClass.cs" />
+    <Compile Include="Messages\Position.cs" />
+    <Compile Include="Messages\RadarScan.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Messages\StartGame.cs" />
