@@ -58,10 +58,9 @@ namespace BotWars2Server
 
                     foreach(var wall in arena.Walls)
                     {
-                        foreach (var brick in wall)
-                        {
-                            var transformedBrick = wall.TransformBrick(brick, tick);
-                            DrawPreviousPosition(gfx, transformedBrick, arena);
+                        foreach (var brick in wall.TransformBricks(arena, tick))
+                        {                            
+                            DrawPreviousPosition(gfx, brick, arena);
                         }
                     }
                 }
