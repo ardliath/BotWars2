@@ -58,7 +58,7 @@ namespace BotWars2Server.Code.Logic
                     }
                 }
 
-                CheckForCollisions(this.Arena);
+                CheckForCollisions(this.Arena, tick);
 
                 foreach (var player in this.Arena.Players)
                 {
@@ -156,14 +156,14 @@ namespace BotWars2Server.Code.Logic
         /// <summary>
         /// Checks if there have been any collisions and removes players from the game if there have been
         /// </summary>
-        public static void CheckForCollisions(Arena arena)
+        public static void CheckForCollisions(Arena arena, int tick)
         {
             foreach(var player in arena.Players.Where(p => p.IsAlive))
             {
                 var otherTracks = arena.Tracks
                     .Where(t => !t.Player.Equals(player))
                     .SelectMany(t => t.PreviousPositions)
-                    .Union(arena.Walls.SelectMany(w => w));
+                    .Union(arena.Walls.SelectMany(w => w.TransformBricks(arena, tick)));
 
                 var playerTrack = arena.Tracks
                     .Single(t => t.Player.Equals(player))?.PreviousPositions;
