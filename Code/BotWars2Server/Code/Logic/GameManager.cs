@@ -77,22 +77,22 @@ namespace BotWars2Server.Code.Logic
 
         private void CreateWalls()
         {
-            var walls = new List<List<Position>>();
+            var walls = new List<Wall>();
             if (this.Arena.ArenaOptions.BoundaryStyle == BoundaryStyle.Walled)
             {
-                var thisWall = new List<Position>();
+                var thisWall = new Wall();
                 for (int i = 0; i < this.Arena.Width; i++) thisWall.Add(new Position(i, 0));
                 walls.Add(thisWall);
 
-                thisWall = new List<Position>();
+                thisWall = new Wall();
                 for (int i = 0; i < this.Arena.Width; i++) thisWall.Add(new Position(i, this.Arena.Height));
                 walls.Add(thisWall);
 
-                thisWall = new List<Position>();
+                thisWall = new Wall();
                 for (int i = 0; i < this.Arena.Height; i++) thisWall.Add(new Position(0, i));
                 walls.Add(thisWall);
 
-                thisWall = new List<Position>();
+                thisWall = new Wall();
                 for (int i = 0; i < this.Arena.Height; i++) thisWall.Add(new Position(this.Arena.Width, i));
                 walls.Add(thisWall);
             }
@@ -101,6 +101,9 @@ namespace BotWars2Server.Code.Logic
             for(int i = 0; i < this.Arena.ArenaOptions.InteriorWalls; i++)
             {
                 var isHorizontal = random.Next(100) < 50;
+                var doesMove = i < this.Arena.ArenaOptions.MovingWalls;
+                var moveDirection = random.Next(100) < 50;
+
                 var dimension = isHorizontal ? this.Arena.Width : this.Arena.Height;
                 int length = random.Next(5, dimension);
                 var space = dimension - length;
@@ -111,7 +114,7 @@ namespace BotWars2Server.Code.Logic
                 int xStart = isHorizontal ? spaceInFront : random.Next(0, this.Arena.Width);
                 int yStart = isHorizontal ? random.Next(0, this.Arena.Height) : spaceInFront;
 
-                var thisWall = new List<Position>();
+                var thisWall = new Wall();
                 for (int j = 0; j < length; j++)
                 {
                     thisWall.Add(new Position(xStart + (j * xOffset), yStart + (j * yOffset)));
