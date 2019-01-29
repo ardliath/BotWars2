@@ -119,7 +119,7 @@ namespace BotWars2Server.Code.Logic
                 var thisWall = new Wall();
                 if (doesMove)
                 {
-                    thisWall.MovementCycle = random.Next(5, space);
+                    thisWall.MovementCycle = random.Next(5, space - spaceInFront);
                     thisWall.MovementTransform = moveDirectionIsHorizontal
                         ? new Position(speed, 0)
                         : new Position(0, speed);
