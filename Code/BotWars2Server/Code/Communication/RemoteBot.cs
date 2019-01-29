@@ -1,4 +1,5 @@
-﻿using BotWars2Server.Code.State;
+﻿using BotWars2Server.Code.Logic;
+using BotWars2Server.Code.State;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
@@ -81,7 +82,17 @@ namespace BotWars2Server.Code.Communication
         {
             var request = (HttpWebRequest)WebRequest.Create(string.Format("{0}/startgame", this.Uri));
 
-            var postData = JsonConvert.SerializeObject(arena);
+            var radar = Radar.Scan(this, arena);
+            var postData = JsonConvert.SerializeObject(new CurrentGameState
+            {
+                Arena = new ArenaState
+                {
+                    ArenaHeight = arena.Height,
+                    ArenaWidth = arena.Width,
+                },
+                CurrentPosition = this.Position,
+                Radar = radar
+            });
 
             var data = Encoding.ASCII.GetBytes(postData);
 

@@ -49,15 +49,19 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Code\Communication\State\ArenaState.cs" />
+    <Compile Include="Code\Communication\State\CurrentGameState.cs" />
     <Compile Include="Code\Communication\HttpListenerClass.cs" />
     <Compile Include="Code\Communication\ICommander.cs" />
     <Compile Include="Code\Communication\RegisterData.cs" />
     <Compile Include="Code\Communication\RemoteBot.cs" />
+    <Compile Include="Code\Communication\State\RadarScan.cs" />
     <Compile Include="Code\Communication\TurnData.cs" />
     <Compile Include="Code\HouseBots\HouseBotBase.cs" />
     <Compile Include="Code\HouseBots\DeterminedBot.cs" />
     <Compile Include="Code\HouseBots\RandomBot.cs" />
     <Compile Include="Code\Logic\GameManager.cs" />
+    <Compile Include="Code\Logic\Radar.cs" />
     <Compile Include="Code\State\Arena.cs" />
     <Compile Include="Code\State\ArenaOptions.cs" />
     <Compile Include="Code\State\BoundaryStyle.cs" />
