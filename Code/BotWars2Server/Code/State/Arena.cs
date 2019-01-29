@@ -22,7 +22,7 @@ namespace BotWars2Server.Code.State
         {
             this.Zoom = zoom;
             this.ArenaOptions = new ArenaOptions();
-            this.Walls = new List<Position>[] { };
+            this.Walls = new List<Position>[] { };            
         }
     }
 }

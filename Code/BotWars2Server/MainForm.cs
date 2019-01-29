@@ -65,7 +65,7 @@ namespace BotWars2Server
                 Height = 200,
                 Width = 200,
             },
-            this.Players.ToArray());
+            this.Players.ToArray());            
         }
 
         public delegate void ListPlayersDelegate();
