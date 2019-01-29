@@ -47,22 +47,23 @@ namespace BotWars2.ClientBot
                         break;
 
                     case ConsoleKey.DownArrow:
-                        move = Direction.Right;
+                        move = Direction.Down;
                         break;
 
                     case ConsoleKey.LeftArrow:
                         move = Direction.Left;
                         break;
 
-                    default:
+                    case ConsoleKey.RightArrow:
                         move = Direction.Right;
-                        break;
+                        break;                        
+
+                    default:
+                        return;
                 }
 
                 SendTurnCommand(move);
-            } while (true);        
-
-            Console.ReadKey();
+            } while (true);
         }
 
         private static void SendRegisterCommand()
