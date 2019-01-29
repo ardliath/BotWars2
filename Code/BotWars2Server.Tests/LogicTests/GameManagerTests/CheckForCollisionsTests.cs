@@ -23,7 +23,7 @@ namespace BotWars2Server.Tests.LogicTests.GameManagerTests
                 }
             });
 
-            GameManager.CheckForCollisions(arena);
+            GameManager.CheckForCollisions(arena, 0);
 
             Assert.IsTrue(arena.Players.First().IsAlive);
             Assert.IsFalse(arena.Players.Last().IsAlive);            
@@ -40,7 +40,7 @@ namespace BotWars2Server.Tests.LogicTests.GameManagerTests
                 }
             });
 
-            GameManager.CheckForCollisions(arena);
+            GameManager.CheckForCollisions(arena, 0);
 
             Assert.IsFalse(arena.Players.First().IsAlive);
             Assert.IsTrue(arena.Players.Last().IsAlive);            
@@ -58,7 +58,7 @@ namespace BotWars2Server.Tests.LogicTests.GameManagerTests
                 }
             }, crossingTrackShouldKill);
 
-            GameManager.CheckForCollisions(arena);
+            GameManager.CheckForCollisions(arena, 0);
 
             Assert.AreEqual(expectedIsAlive, arena.Players.First().IsAlive);
             Assert.IsTrue(arena.Players.Last().IsAlive);

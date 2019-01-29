@@ -27,7 +27,7 @@ namespace BotWars2Server.Code.State
             if (this.DoesMove)
             {
                 var cycleTick = tick % this.MovementCycle;
-                var isOnReturnJourney = ((tick - cycleTick) / 2) % 2 == 1;
+                bool isOnReturnJourney = IsOnReturnJourney(this.MovementCycle, tick);
 
                 if (isOnReturnJourney) // if we're on the way back
                 {
@@ -53,6 +53,14 @@ namespace BotWars2Server.Code.State
             {
                 return brick;
             }
+        }
+
+        public static bool IsOnReturnJourney(int cycle, int tick)
+        {
+            var outAndBack = cycle * 2;
+            var doubleCycleTick = tick % outAndBack; // ticks to go out and back            
+            var onReturnJourney = doubleCycleTick >= cycle;
+            return onReturnJourney;
         }
 
         public IEnumerable<Position> TransformBricks(Arena arena, int tick)

@@ -66,6 +66,7 @@
     <Compile Include="LogicTests\GameManagerTests\SetStartPositionsTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="TestTests.cs" />
+    <Compile Include="WallTests\IsOnReturnJourneyTests.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
