@@ -10,7 +10,7 @@ namespace BotWars2Server.Code.Logic
     {
         public Commander()
         {
-            this.Players = new Dictionary<string, RemoteBot>();
+            this.Players = new Dictionary<string, RemoteBot>();            
         }
 
         public Dictionary<string, RemoteBot> Players { get; set; }
