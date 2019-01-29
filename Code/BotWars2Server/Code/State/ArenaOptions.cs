@@ -10,12 +10,14 @@
         public int? StartingMaximumTailLength { get; set; }
 
         public BoundaryStyle BoundaryStyle { get; set; }
+        public int InteriorWalls { get; set; }
 
         public ArenaOptions()
         {
             this.CrossingOwnTrackCausesDestruction = true;
             this.StartingMaximumTailLength = 500;
-            this.BoundaryStyle = BoundaryStyle.NeverEnding;
+            this.BoundaryStyle = BoundaryStyle.Walled;
+            this.InteriorWalls = 3;
         }
     }
 }

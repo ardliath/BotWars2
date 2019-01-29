@@ -97,6 +97,28 @@ namespace BotWars2Server.Code.Logic
                 walls.Add(thisWall);
             }
 
+            var random = new Random();
+            for(int i = 0; i < this.Arena.ArenaOptions.InteriorWalls; i++)
+            {
+                var isHorizontal = random.Next(100) < 50;
+                var dimension = isHorizontal ? this.Arena.Width : this.Arena.Height;
+                int length = random.Next(5, dimension);
+                var space = dimension - length;
+                var spaceInFront = random.Next(0, space);
+
+                int xOffset = isHorizontal ? 1 : 0;
+                int yOffset = isHorizontal ? 0 : 1;
+                int xStart = isHorizontal ? spaceInFront : random.Next(0, this.Arena.Width);
+                int yStart = isHorizontal ? random.Next(0, this.Arena.Height) : spaceInFront;
+
+                var thisWall = new List<Position>();
+                for (int j = 0; j < length; j++)
+                {
+                    thisWall.Add(new Position(xStart + (j * xOffset), yStart + (j * yOffset)));
+                }
+                walls.Add(thisWall);
+            }
+
             this.Arena.Walls = walls;
         }
 
