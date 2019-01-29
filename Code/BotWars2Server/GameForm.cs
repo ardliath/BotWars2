@@ -32,7 +32,7 @@ namespace BotWars2Server
             gameManager.Play(Update);
         }
 
-        public void Update(Arena arena)
+        public void Update(Arena arena, int tick)
         {
             using (var bitmap = new Bitmap(this.pictureBox1.Width, pictureBox1.Height))
             {
@@ -60,7 +60,8 @@ namespace BotWars2Server
                     {
                         foreach (var brick in wall)
                         {
-                            DrawPreviousPosition(gfx, brick, arena);
+                            var transformedBrick = this.TransformBrick(brick, wall, tick);
+                            DrawPreviousPosition(gfx, transformedBrick, arena);
                         }
                     }
                 }
@@ -69,6 +70,39 @@ namespace BotWars2Server
                 {
                     gfx.DrawImage(bitmap, new PointF(0, 0));
                 }
+            }
+        }
+
+        private Position TransformBrick(Position brick, Wall wall, int tick)
+        {
+            if(wall.DoesMove)
+            {
+                var cycleTick = tick % wall.MovementCycle;
+                var isOnReturnJourney = ((tick - cycleTick) / 2) % 2 == 1;                
+
+                if(isOnReturnJourney) // if we're on the way back
+                {
+                    var returnJourneyOffset = isOnReturnJourney ? -1 : 1;
+
+                    int actualX = brick.X // then our position is X (the origin)
+                        + (wall.MovementCycle * wall.MovementTransform.X) // added to a full movement cycle of the wall
+                        + (cycleTick * wall.MovementTransform.X * returnJourneyOffset); // subtract the tick we're on
+
+                    int actualY = brick.Y 
+                        + (wall.MovementCycle * wall.MovementTransform.Y) 
+                        + (cycleTick * wall.MovementTransform.Y * returnJourneyOffset);
+
+                    return new Position(actualX, actualY);
+                }
+                else
+                {
+                    return new Position(brick.X + (cycleTick * wall.MovementTransform.X),
+                        brick.Y + (cycleTick * wall.MovementTransform.Y));
+                }
+            }
+            else
+            {
+                return brick;
             }
         }
 

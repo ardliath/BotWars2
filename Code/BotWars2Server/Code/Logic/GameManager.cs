@@ -20,7 +20,7 @@ namespace BotWars2Server.Code.Logic
         public Arena Arena { get; }
         public IEnumerable<Player> Players { get; }
 
-        public void Play(Action<Arena> updateAction)
+        public void Play(Action<Arena, int> updateAction)
         {
             this.Arena.Players = this.Players;
             var tracks = new List<Track>();
@@ -38,7 +38,7 @@ namespace BotWars2Server.Code.Logic
                 this.SendStartInstructions(player);
             }
 
-
+            int tick = 0;
             while (this.Arena.Players.Count(p => p.IsAlive) > 1)
             {
                 foreach(var player in this.Arena.Players.Where(p => p.IsAlive))
@@ -65,13 +65,14 @@ namespace BotWars2Server.Code.Logic
                     this.UpdatePlayersOnArena(player);
                 }
 
-                updateAction(this.Arena);
+                updateAction(this.Arena, tick);
 
                 for (int i = 0; i < 20; i++)
                 {
                     Application.DoEvents();
                     Thread.Sleep(5);
                 }
+                tick++;
             }
         }
 
@@ -102,10 +103,10 @@ namespace BotWars2Server.Code.Logic
             {
                 var isHorizontal = random.Next(100) < 50;
                 var doesMove = i < this.Arena.ArenaOptions.MovingWalls;
-                var moveDirection = random.Next(100) < 50;
+                var moveDirectionIsHorizontal = random.Next(100) < 50;
 
                 var dimension = isHorizontal ? this.Arena.Width : this.Arena.Height;
-                int length = random.Next(5, dimension);
+                int length = random.Next(5, dimension - 20);
                 var space = dimension - length;
                 var spaceInFront = random.Next(0, space);
 
@@ -113,8 +114,16 @@ namespace BotWars2Server.Code.Logic
                 int yOffset = isHorizontal ? 0 : 1;
                 int xStart = isHorizontal ? spaceInFront : random.Next(0, this.Arena.Width);
                 int yStart = isHorizontal ? random.Next(0, this.Arena.Height) : spaceInFront;
+                const int speed = 1; // just in case we want to make this configurable in the future
 
                 var thisWall = new Wall();
+                if (doesMove)
+                {
+                    thisWall.MovementCycle = random.Next(5, space);
+                    thisWall.MovementTransform = moveDirectionIsHorizontal
+                        ? new Position(speed, 0)
+                        : new Position(0, speed);
+                }
                 for (int j = 0; j < length; j++)
                 {
                     thisWall.Add(new Position(xStart + (j * xOffset), yStart + (j * yOffset)));

@@ -8,5 +8,16 @@ namespace BotWars2Server.Code.State
 {
     public class Wall : List<Position>
     {
+        public bool DoesMove
+        {
+            get
+            {
+                return this.MovementTransform != null;
+            }
+        }
+
+        public Position MovementTransform { get; set; }
+
+        public int MovementCycle { get; set; }
     }
 }
