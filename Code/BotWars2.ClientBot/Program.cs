@@ -93,7 +93,7 @@ namespace BotWars2.ClientBot
             var request = (HttpWebRequest)WebRequest.Create(string.Format("{0}/turn", "http://localhost:5999"));
             var moveStr = Enum.GetName(typeof(Direction), move);
             Console.WriteLine(string.Format("Sending message to the server to move - {0}", moveStr));
-            var postData = string.Concat("{Name:'Remote Bot', Direction: '", moveStr, "}");
+            var postData = string.Concat("{Name:'Remote Bot', Direction: '", moveStr, "'}");
 
             var data = Encoding.ASCII.GetBytes(postData);
 

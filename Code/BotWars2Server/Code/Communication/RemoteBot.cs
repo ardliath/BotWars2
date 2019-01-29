@@ -21,6 +21,11 @@ namespace BotWars2Server.Code.Communication
         public RemoteBot(string name, string uri) : base(name)
         {
             this.Uri = uri;
+            this.CurrentCommand = new TurnData
+            {
+                Name = name,
+                Direction = "Right"
+            };
         }
 
         public override Position GetMove()
@@ -30,12 +35,41 @@ namespace BotWars2Server.Code.Communication
                 lock (this.CurrentCommand)
                 {
                     var direction = Enum.Parse(typeof(Direction), this.CurrentCommand.Direction);
-                    return new Position(this.Position.X + 1, this.Position.Y); // move down by default
+                    int xChange;
+                    int yChange;
+                    switch(direction)
+                    {
+                        case Direction.Down:
+                            xChange = 0;
+                            yChange = 1;
+                            break;
+
+                        case Direction.Up:
+                            xChange = 0;
+                            yChange = -1;
+                            break;
+
+                        case Direction.Left:
+                            xChange = -1;
+                            yChange = 0;
+                            break;
+
+                        case Direction.Right:
+                            xChange = 1;
+                            yChange = 0;
+                            break;
+
+                        default:
+                            xChange = 0;
+                            yChange = 0;
+                            break;
+                    }
+                    return new Position(this.Position.X + xChange, this.Position.Y + yChange);
                 }
             }
             else
             {
-                return new Position(this.Position.X, this.Position.Y + 1); // move down by default
+                return this.Position; // move down by default
             }
         }
 

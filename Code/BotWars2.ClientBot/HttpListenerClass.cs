@@ -132,12 +132,15 @@ namespace BotWars2.ClientBot
             while (true)
             {
                 HttpListenerContext context = _listener.GetContext();
-                ProcessIncomingMessage(context);
+                if(ProcessIncomingMessage(context))
+                {
+                    break;
+                }
             }
         }
 
 
-        private void ProcessIncomingMessage(HttpListenerContext context)
+        private bool ProcessIncomingMessage(HttpListenerContext context)
         {
             string body = null;
             StreamReader sr = new StreamReader(context.Request.InputStream);
@@ -159,9 +162,11 @@ namespace BotWars2.ClientBot
                         sw.WriteLine(context.Request.RawUrl);
                     }
 
-                    _startGameAction(data);                    
-                    break;
+                    _startGameAction(data);
+                    return true;
             }
+
+            return false;
         }
 
 
