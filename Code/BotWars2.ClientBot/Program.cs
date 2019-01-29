@@ -15,7 +15,7 @@ namespace BotWars2.ClientBot
 
         static void Main(string[] args)
         {
-            Console.WriteLine("Ready to send Register Command...");
+            Console.WriteLine("Ready to send Register Command Press Any Key to register the bot...");
             Console.ReadKey();
 
             bool gameHasStarted = false;
@@ -37,8 +37,9 @@ namespace BotWars2.ClientBot
 
             do
             {
-                Console.WriteLine("Start Instruction recieved - we're playing");
+                Console.WriteLine("Start Instruction recieved - we're playing a game");
                 Console.WriteLine("Ready to send Turn Command...");
+                Console.WriteLine("Use arrow keys to move the bot");
                 var move = Direction.Up;
                 switch (Console.ReadKey().Key)
                 {
