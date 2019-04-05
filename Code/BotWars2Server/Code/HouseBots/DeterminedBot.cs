@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using BotWars2Server.Code.Communication;
 using BotWars2Server.Code.State;
 
 namespace BotWars2Server.Code.HouseBots
@@ -13,12 +14,14 @@ namespace BotWars2Server.Code.HouseBots
 
         public Random Random { get; set; }
 
+        public override IEnumerable<int> PlayableRounds => Enumerable.Range(1, 1);
+
         public DeterminedBot() : base("Determined Bot")
         {
             this.Random = new Random(Guid.NewGuid().GetHashCode());
         }
 
-        public override Position GetMove()
+        public override Position GetMove(RadarScan scan)
         {
             switch (this.Direction)
             {

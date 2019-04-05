@@ -28,19 +28,7 @@ namespace BotWars2Server.Code.Logic
 
         public void RegisterPlayersActiveInGame(IEnumerable<RemoteBot> players)
         {
-            this.Players = players.ToDictionary(x => x.Name, x => x);
-        }
-
-        public void Turn(TurnData data)
-        {
-            var player = this.Players.ContainsKey(data.Name) ? this.Players[data.Name] : null;
-            if (player != null && player.CurrentCommand != null)
-            {
-                lock (player.CurrentCommand)
-                {
-                    player.CurrentCommand = data;
-                }
-            }
+            this.Players = players.ToDictionary(x => x.SecretCommandCode, x => x);
         }
     }
 }

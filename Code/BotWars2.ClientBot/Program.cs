@@ -1,6 +1,9 @@
-﻿using BotWars2.ClientBot.Messages;
+﻿using BotWars2.ClientBot.Framework;
+using BotWars2.ClientBot.Messages;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.IO;
 using System.Linq;
 using System.Net;
@@ -12,68 +15,70 @@ namespace BotWars2.ClientBot
 {
     class Program
     {
+        public static MyBot Bot { get; set; }
+
+        public static HttpListenerClass Listener { get; set; }
+
+        public static ArenaState CurrentGame { get; set; }
+
+   
 
         static void Main(string[] args)
         {
-            Console.WriteLine("Ready to send Register Command Press Any Key to register the bot...");
-            Console.ReadKey();
+            Bot = new MyBot();
 
-            bool gameHasStarted = false;
+            var timer = new Timer(SendRegisterCommand, null, 30 * 1000, 10 * 1000);
 
+            Console.WriteLine(@"                                                                            
+,--------.                             ,--. ,--.        ,--.                
+'--.  .--',--.--. ,---. ,--,--,  ,---. |  | |  |,--,--, `--' ,---. ,--,--,  
+   |  |   |  .--'| .-. ||      \(  .-' |  | |  ||      \,--.| .-. ||      \ 
+   |  |   |  |   ' '-' '|  ||  |.-'  `)'  '-'  '|  ||  ||  |' '-' '|  ||  | 
+   `--'   `--'    `---' `--''--'`----'  `-----' `--''--'`--' `---' `--''--' 
+                                                                            ");
+
+            var rand = new Random();
+            var bootmessages = new string[]
+            {
+                "Initialising the reality",
+                "Booting the bootstrapper",
+                "Syncing the sockets",
+                "Calibrating the connection",
+                "Porting processes"
+            };
+
+            foreach (var joke in bootmessages.OrderBy(m => rand.Next()))
+            {
+                if (rand.Next(0, 100) > 50)
+                {
+                    Console.WriteLine($"{joke}...");
+                    Thread.Sleep(rand.Next(500, 1000));                    
+                }
+            }            
+
+            Console.WriteLine("Forcing bot into virtual reality construct...");
             SendRegisterCommand();
+            Console.WriteLine("Bot deployed!");
+
 
             Console.WriteLine("Ready Command sent waiting for game to begin...");
-            new HttpListenerClass(6999, data =>
-            {
-                gameHasStarted = true;
-
-            }).Listen();
-
-            do
-            {
-                Thread.Sleep(10);
-            } while (!gameHasStarted);
-
-
-            do
-            {
-                Console.WriteLine("Start Instruction recieved - we're playing a game");
-                Console.WriteLine("Ready to send Turn Command...");
-                Console.WriteLine("Use arrow keys to move the bot");
-                var move = Direction.Up;
-                switch (Console.ReadKey().Key)
-                {
-                    case ConsoleKey.UpArrow:
-                        move = Direction.Up;
-                        break;
-
-                    case ConsoleKey.DownArrow:
-                        move = Direction.Down;
-                        break;
-
-                    case ConsoleKey.LeftArrow:
-                        move = Direction.Left;
-                        break;
-
-                    case ConsoleKey.RightArrow:
-                        move = Direction.Right;
-                        break;                        
-
-                    default:
-                        return;
-                }
-
-                SendTurnCommand(move);
-            } while (true);
+            Listener = new HttpListenerClass(6999, Bot);
+            Listener.Initialize();                        
         }
 
-        private static void SendRegisterCommand()
+        private static void SendRegisterCommand(object state = null)
         {
-            var request = (HttpWebRequest)WebRequest.Create(string.Format("{0}/register", "http://localhost:5999"));
+            var server = ConfigurationManager.AppSettings["BotWarsServer"];
+            var request = (HttpWebRequest)WebRequest.Create(string.Format("{0}/register", server));
 
-            var postData = "{Name:'Remote Bot'}";
+            var postData = new Register
+            {
+                Name = Bot.Name,
+                SecretCommandCode = Bot.SecretCommandCode,
+                Uri = new Uri("http://" + Environment.MachineName + ":6999")
+            };
 
-            var data = Encoding.ASCII.GetBytes(postData);
+            var data = Encoding.ASCII.GetBytes(JsonConvert.SerializeObject(postData));
 
             request.Method = "POST";
             request.Timeout = 30000;
@@ -88,30 +93,7 @@ namespace BotWars2.ClientBot
             var response = (HttpWebResponse)request.GetResponse();
 
             var responseString = new StreamReader(response.GetResponseStream()).ReadToEnd();
-        }
-
-        private static void SendTurnCommand(Direction move)
-        {
-            var request = (HttpWebRequest)WebRequest.Create(string.Format("{0}/turn", "http://localhost:5999"));
-            var moveStr = Enum.GetName(typeof(Direction), move);
-            Console.WriteLine(string.Format("Sending message to the server to move - {0}", moveStr));
-            var postData = string.Concat("{Name:'Remote Bot', Direction: '", moveStr, "'}");
-
-            var data = Encoding.ASCII.GetBytes(postData);
-
-            request.Method = "POST";
-            request.Timeout = 30000;
-            request.ContentType = "application/x-www-form-urlencoded";
-            request.ContentLength = data.Length;
-
-            using (var stream = request.GetRequestStream())
-            {
-                stream.Write(data, 0, data.Length);
-            }
-
-            var response = (HttpWebResponse)request.GetResponse();
-
-            var responseString = new StreamReader(response.GetResponseStream()).ReadToEnd();
+            Console.WriteLine("Server communication confirmed");
         }
     }
 }

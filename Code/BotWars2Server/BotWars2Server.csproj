@@ -49,6 +49,10 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Code\Communication\EndGame.cs" />
+    <Compile Include="Code\Communication\EndRound.cs" />
+    <Compile Include="Code\Communication\GetMove.cs" />
+    <Compile Include="Code\Communication\GetMoveResponse.cs" />
     <Compile Include="Code\Communication\State\ArenaState.cs" />
     <Compile Include="Code\Communication\State\CurrentGameState.cs" />
     <Compile Include="Code\Communication\HttpListenerClass.cs" />
@@ -57,15 +61,20 @@
     <Compile Include="Code\Communication\RemoteBot.cs" />
     <Compile Include="Code\Communication\State\RadarScan.cs" />
     <Compile Include="Code\Communication\TurnData.cs" />
+    <Compile Include="Code\HouseBots\ClaustroBot.cs" />
     <Compile Include="Code\HouseBots\HouseBotBase.cs" />
     <Compile Include="Code\HouseBots\DeterminedBot.cs" />
+    <Compile Include="Code\HouseBots\Hunter.cs" />
     <Compile Include="Code\HouseBots\RandomBot.cs" />
+    <Compile Include="Code\HouseBots\SirRound.cs" />
+    <Compile Include="Code\HouseBots\Spyro.cs" />
     <Compile Include="Code\Logic\GameManager.cs" />
     <Compile Include="Code\Logic\Radar.cs" />
     <Compile Include="Code\State\Arena.cs" />
     <Compile Include="Code\State\ArenaOptions.cs" />
     <Compile Include="Code\State\BoundaryStyle.cs" />
     <Compile Include="Code\State\Direction.cs" />
+    <Compile Include="Code\State\Game.cs" />
     <Compile Include="Code\State\Player.cs" />
     <Compile Include="Code\State\Position.cs" />
     <Compile Include="Code\State\Track.cs" />

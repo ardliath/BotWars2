@@ -1,4 +1,4 @@
-﻿using BotWars2Server.Code.State;
+﻿using BotWars2.ClientBot.Messages;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
@@ -9,7 +9,7 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace BotWars2Server.Code.Communication
+namespace BotWars2.ClientBot.Framework
 {
     public class HttpListenerClass
     {
@@ -19,9 +19,7 @@ namespace BotWars2Server.Code.Communication
             "index.htm",
             "default.html",
             "default.htm"
-        };
-
-        private readonly ICommander _commander;
+        };        
         private IDictionary<string, string> _mimeTypeMappings =
             new Dictionary<string, string>(StringComparer.InvariantCultureIgnoreCase)
             {
@@ -97,6 +95,7 @@ namespace BotWars2Server.Code.Communication
         private Thread _serverThread;
         private HttpListener _listener;
         private int _port;
+        private readonly MyBot _bot;
 
         public int Port
         {
@@ -108,10 +107,10 @@ namespace BotWars2Server.Code.Communication
         /// Construct server with given port.
         /// </summary>
         /// <param name="port">Port of the server.</param>
-        public HttpListenerClass(int port, ICommander commander)
+        public HttpListenerClass(int port, MyBot bot)
         {
-            this.Initialize(port);
-            _commander = commander;
+            _port = port;
+            _bot = bot;
         }
 
 
@@ -126,7 +125,6 @@ namespace BotWars2Server.Code.Communication
 
         private void Listen()
         {
-
             _listener = new HttpListener();
             _listener.Prefixes.Add("http://*:" + _port.ToString() + "/");
             _listener.Start();
@@ -136,7 +134,6 @@ namespace BotWars2Server.Code.Communication
                 ProcessIncomingMessage(context);
             }
         }
-
 
         private void ProcessIncomingMessage(HttpListenerContext context)
         {
@@ -150,14 +147,61 @@ namespace BotWars2Server.Code.Communication
             var method = context.Request.Url.AbsolutePath.Replace("/", "").ToLower();
             switch (method)
             {
-                case "register":
-                    ProcessRegisterMessage(body);
+                case "startgame":
+                    var data = JsonConvert.DeserializeObject<StartGame>(body);
+
                     context.Response.StatusCode = (int)HttpStatusCode.OK;
                     context.Response.ContentType = "text/plain";
                     using (StreamWriter sw = new StreamWriter(context.Response.OutputStream))
                     {
                         sw.WriteLine(context.Request.RawUrl);
                     }
+
+                    _bot.StartGame(data);
+
+                    break;
+
+                case "endgame":
+                    var endGameData = JsonConvert.DeserializeObject<EndGame>(body);
+
+                    context.Response.StatusCode = (int)HttpStatusCode.OK;
+                    context.Response.ContentType = "text/plain";
+                    using (StreamWriter sw = new StreamWriter(context.Response.OutputStream))
+                    {
+                        sw.WriteLine(context.Request.RawUrl);
+                    }
+
+                    _bot.EndGame(endGameData);
+
+                    break;
+
+                case "endround":
+                    var endRoundData = JsonConvert.DeserializeObject<EndRound>(body);
+
+                    context.Response.StatusCode = (int)HttpStatusCode.OK;
+                    context.Response.ContentType = "text/plain";
+                    using (StreamWriter sw = new StreamWriter(context.Response.OutputStream))
+                    {
+                        sw.WriteLine(context.Request.RawUrl);
+                    }
+
+                    _bot.EndRound(endRoundData);
+
+                    break;
+
+                case "getmove":
+                    var getMoveData = JsonConvert.DeserializeObject<GetMove>(body);
+
+                    context.Response.StatusCode = (int)HttpStatusCode.OK;
+                    context.Response.ContentType = "text/plain";
+                    using (StreamWriter sw = new StreamWriter(context.Response.OutputStream))
+                    {
+                        var responseData = new GetMoveResponse
+                        {
+                            Direction = _bot.GetMove(getMoveData)
+                        };
+                        sw.WriteLine(JsonConvert.SerializeObject(responseData));
+                    }                    
 
                     break;
 
@@ -166,19 +210,13 @@ namespace BotWars2Server.Code.Communication
             }
         }
 
-        private void ProcessRegisterMessage(string messageBody)
-        {
-            var data = JsonConvert.DeserializeObject<RegisterData>(messageBody);            
-            _commander.Register(data);
-        }
 
-
-        private void Initialize(int port)
+        public void Initialize()
         {
-            this._port = port;
             _serverThread = new Thread(this.Listen);
+            _serverThread.Name = "Listen Thread";
             _serverThread.Start();
-            Console.WriteLine(string.Format("Bot initialised on port {0}.", port));
+            Console.WriteLine(string.Format("Bot initialised on port {0}.", _port));
         }
     }
 }
