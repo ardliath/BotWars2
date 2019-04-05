@@ -4,5 +4,7 @@
     {
         public string Name { get; set; }
         public string Direction { get; set; }
+
+        public string SecretCommandCode { get; set; }
     }
 }

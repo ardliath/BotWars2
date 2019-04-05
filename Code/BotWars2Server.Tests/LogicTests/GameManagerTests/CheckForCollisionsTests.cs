@@ -64,7 +64,7 @@ namespace BotWars2Server.Tests.LogicTests.GameManagerTests
             Assert.IsTrue(arena.Players.Last().IsAlive);
         }
 
-        public Arena CreateArena(Position playerOnePosition, Position playerTwoPosition, Action<Arena> createTracks, bool crossingOwnTrackCausesDestruction = true)
+        public Arena CreateArena(Position playerOnePosition, Position playerTwoPosition, Action<Code.State.Arena> createTracks, bool crossingOwnTrackCausesDestruction = true)
         {
             var players = new Player[]
             {
@@ -73,7 +73,7 @@ namespace BotWars2Server.Tests.LogicTests.GameManagerTests
             };
             players.ElementAt(0).Position = playerOnePosition;
             players.ElementAt(1).Position = playerTwoPosition;
-            var arena = new Arena
+            var arena = new Code.State.Arena
             {
                 Height = 100,
                 Width = 100,

@@ -13,12 +13,13 @@ namespace BotWars2Server.Tests.LogicTests.GameManagerTests
     public class SetStartPositionsTests
     {
         [TestCase(250, 250, 200, 125, 50, 125, TestName = "In a 250*250 arena the two players are played at 200,125 and 50,125")]
-        [TestCase(500, 500, 450, 250, 50, 250, TestName = "In a 500*500 arena the two players are played at 450,250 and 50,250")]
+        [TestCase(500, 500, 400, 250, 100, 250, TestName = "In a 500*500 arena the two players are played at 400,250 and 100,250")]
         [TestCase(250, 500, 450, 125, 50, 125, TestName = "In a 250*500 arena the two players are played at 450,125 and 50,125")]
         public void TwoPlayers(int arenaX, int arenaY, int p1x, int p1y, int p2x, int p2y)
         {
             var arena = CreateArena(arenaX, arenaY);
-            var manager = new GameManager(arena, arena.Players.First(), arena.Players.Last());
+            var game = new Game(arena.Players, arena);
+            var manager = new GameManager(game);
 
             manager.SetStartPositions();
 
@@ -35,7 +36,7 @@ namespace BotWars2Server.Tests.LogicTests.GameManagerTests
                 new Mock<Player>(Guid.NewGuid().ToString()).Object
             };
 
-            var arena = new Arena
+            var arena = new Code.State.Arena
             {
                 Height = arenaX,
                 Width = arenaY,

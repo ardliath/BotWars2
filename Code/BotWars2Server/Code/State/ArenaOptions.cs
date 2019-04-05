@@ -13,13 +13,16 @@
         public int InteriorWalls { get; set; }
         public int MovingWalls { get; set; }
 
+        public bool PlayAllPlayersInSingleGame { get; set; }
+
         public ArenaOptions()
         {
             this.CrossingOwnTrackCausesDestruction = true;
-            this.StartingMaximumTailLength = 500;
+            this.StartingMaximumTailLength = null;
             this.BoundaryStyle = BoundaryStyle.Walled;
             this.InteriorWalls = 1;
             this.MovingWalls = 1;
+            this.PlayAllPlayersInSingleGame = false;
         }
     }
 }

@@ -9,6 +9,9 @@ namespace BotWars2Server.Code.State
     public class Arena
     {
         public int Zoom { get; set; }
+
+        public int Speed { get; set; }
+
         public ArenaOptions ArenaOptions { get; set; }
         public int Height { get; set; }
         public int Width { get; set; }
@@ -22,7 +25,8 @@ namespace BotWars2Server.Code.State
         {
             this.Zoom = zoom;
             this.ArenaOptions = new ArenaOptions();
-            this.Walls = new Wall[] { };            
+            this.Walls = new Wall[] { };
+            this.Speed = 30;
         }
     }
 }
