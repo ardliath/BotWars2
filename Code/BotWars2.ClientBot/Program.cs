@@ -4,6 +4,7 @@ using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Configuration;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Net;
@@ -16,6 +17,8 @@ namespace BotWars2.ClientBot
     class Program
     {
         public static MyBot Bot { get; set; }
+
+        public static string ServerAddress { get; set; }
 
         public static HttpListenerClass Listener { get; set; }
 
@@ -54,9 +57,39 @@ namespace BotWars2.ClientBot
                     Console.WriteLine($"{joke}...");
                     Thread.Sleep(rand.Next(500, 1000));                    
                 }
-            }            
+            }
 
-            Console.WriteLine("Forcing bot into virtual reality construct...");
+            Console.WriteLine("Would you like to:");
+            Console.WriteLine(" 1 - Connect to Game");
+            Console.WriteLine(" 2 - Connect to Test Server");
+            Console.WriteLine(" ");
+
+            var key = Console.ReadKey().Key;
+            Console.WriteLine();
+            Console.WriteLine();
+            if (key == ConsoleKey.D1)
+            {
+                ServerAddress = ConfigurationManager.AppSettings["BotWarsServer"];
+                Console.WriteLine("Forcing bot into virtual reality construct...");
+            }
+            else if(key == ConsoleKey.D2)
+            {                
+                Console.WriteLine("Isolating bot in test environment...");
+
+                var p = new Process();
+                var rootPath = new DirectoryInfo(AppDomain.CurrentDomain.BaseDirectory)
+                    .Parent // bin
+                    .Parent // ClientBot
+                    .Parent.FullName; // Code
+
+                var path = string.Concat(rootPath, @"\BotWars2Server\bin\debug\BotWars2Server.exe");
+                p.StartInfo.FileName = path;
+                p.Start();
+                ServerAddress = "http://localhost";
+                Thread.Sleep(1000);
+            }
+
+
             SendRegisterCommand();
             Console.WriteLine("Bot deployed!");
 
@@ -67,9 +100,8 @@ namespace BotWars2.ClientBot
         }
 
         private static void SendRegisterCommand(object state = null)
-        {
-            var server = ConfigurationManager.AppSettings["BotWarsServer"];
-            var request = (HttpWebRequest)WebRequest.Create(string.Format("{0}/register", server));
+        {            
+            var request = (HttpWebRequest)WebRequest.Create(string.Format("{0}/register", ServerAddress));
 
             var postData = new Register
             {
